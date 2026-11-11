@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CURLEW York Action Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  /* layout: calm working page. Headline states the message; day strip; group picker; one white panel per section; teal accent, red only for the deadline and overdue items */
+  --bg:#f3f5f4; --surface:#ffffff; --hover:#eaf1f0; --ink:#14212b; --sec:#52626d; --mut:#7d8a93; --rule:#d6dddd; --red:#c2372b; --accent:#0f6f78; --bar:#7b8a92; --on:#ffffff;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif; --body:"IBM Plex Sans","Segoe UI",Arial,sans-serif; --mono:var(--body);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ color-scheme:dark;
+    --bg:#10181d; --surface:#18232a; --hover:#22313a; --ink:#e8eef0; --sec:#a9b8c1; --mut:#8496a1; --rule:#2c3a43; --red:#f07a6c; --accent:#4fb8c0; --bar:#6f828d; --on:#10181d; }
+}
+:root[data-theme="dark"]{ color-scheme:dark;
+  --bg:#10181d; --surface:#18232a; --hover:#22313a; --ink:#e8eef0; --sec:#a9b8c1; --mut:#8496a1; --rule:#2c3a43; --red:#f07a6c; --accent:#4fb8c0; --bar:#6f828d; --on:#10181d; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--body);font-variant-numeric:tabular-nums}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 16px 56px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:38px;line-height:1.08;font-weight:800;letter-spacing:-.02em}
+h2{font-size:21px;font-weight:800;letter-spacing:-.01em}
+h3{font-size:15px;font-weight:700}
+p{margin:0}
+a{color:var(--ink)}
+.mono{font:500 11.5px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--sec)}
+.red{color:var(--red)}
+.dek{font-size:18px;color:var(--sec);max-width:62ch;margin-top:8px}
+.byline{margin-top:10px}
+.block{border-top:3px solid var(--ink);padding-top:10px;display:flex;flex-direction:column;gap:10px}
+.lede{color:var(--sec);max-width:68ch}
+button,.btn{font:500 11.5px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink);background:var(--bg);border:1px solid var(--ink);border-radius:2px;min-height:32px;padding:0 10px;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+button:hover,.btn:hover{background:#f1f1f1}
+button.on,.btn.on{background:var(--ink);color:#fff}
+button.link{border:0;min-height:24px;padding:0 2px;text-decoration:underline;background:none}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.tabs,.picker{display:flex;flex-wrap:wrap;gap:6px}
+input[type=search],input[type=text]{font:400 15px var(--body);color:var(--ink);border:1px solid var(--ink);border-radius:2px;min-height:36px;padding:4px 10px;background:#fff;width:100%}
+.hidden{display:none !important}
+/* meeting */
+.meet{border-left:3px solid var(--ink);padding-left:12px;display:flex;flex-direction:column;gap:6px;max-width:80ch}
+.meet .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+/* strip */
+.days{display:grid;gap:0}
+.days .c{text-align:center;font:500 10px/1.3 var(--mono);color:var(--sec);padding:3px 0;border-left:1px solid var(--rule)}
+.days .c.we{color:var(--mut)}
+.days .c.today{background:var(--ink);color:#fff}
+.days .c.dl{color:var(--red);font-weight:600}
+.ms{display:flex;flex-direction:column;gap:2px;padding-top:8px;border-top:1px solid var(--rule)}
+.ms .t{font-size:14px}
+.ms .t b{font-weight:600}
+.mtrack{display:grid;height:14px}
+.mtrack i{background:var(--bar);height:8px;align-self:center;border-radius:1px}
+.mtrack i.pt{background:var(--ink);width:10px;height:10px;transform:rotate(45deg);justify-self:center}
+.mtrack i.dlm{background:var(--red)}
+/* progress */
+.prow{display:grid;grid-template-columns:230px 1fr 90px;gap:12px;align-items:center;padding:5px 0;border-top:1px solid var(--rule);text-decoration:none}
+.prow .pb{height:6px;background:var(--rule)}
+.prow .pb i{display:block;height:100%;background:var(--ink)}
+.prow .n{font:500 12px var(--mono);text-align:right;color:var(--ink)}
+.prow .d{display:block;font:500 10.5px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--sec)}
+@media (max-width:640px){.prow{grid-template-columns:1fr 80px}.prow .pb{grid-column:1 / -1;order:3}}
+/* tools */
+.tools{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+@media (max-width:640px){.tools{grid-template-columns:1fr}}
+.switch{display:inline-flex;gap:8px;align-items:center;min-height:32px;cursor:pointer}
+.switch input{width:22px;height:22px;margin:0;accent-color:var(--ink)}
+.notice{border:1px solid var(--ink);padding:8px 10px;border-radius:2px;max-width:80ch}
+/* cards */
+.card{border-top:3px solid var(--ink);padding-top:10px;display:flex;flex-direction:column;gap:10px}
+.chead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.kind{margin-top:10px;padding-top:6px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.sub{margin-top:10px}
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{border-top:1px solid var(--rule);padding:7px 0;display:flex;flex-direction:column;gap:3px}
+.row{display:grid;grid-template-columns:30px 1fr;align-items:start;cursor:pointer;min-height:28px}
+.row input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--ink)}
+.tx b{font-weight:600}
+li.done .tx{color:var(--mut);text-decoration:line-through}
+.meta{padding-left:30px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+li.dec .meta,li.dec .tx{padding-left:0}
+.lab{font:600 11px var(--mono);letter-spacing:.08em;border:1px solid var(--ink);padding:1px 5px;border-radius:2px;text-transform:uppercase}
+.ans{font-weight:500}
+form.af{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:end;max-width:720px}
+form.af label{grid-column:1 / -1}
+@media (max-width:520px){form.af{grid-template-columns:1fr 1fr}form.af input{grid-column:1 / -1}}
+details.notes{border-top:1px solid var(--ink);margin-top:10px;padding-top:6px}
+details.notes summary{cursor:pointer;min-height:28px;display:flex;align-items:center}
+details.notes li{font-size:13px;color:var(--sec)}
+/* long-run chart */
+.tl{display:flex;flex-direction:column}
+.tlr{display:grid;grid-template-columns:180px 1fr;gap:12px;align-items:center;border-top:1px solid var(--rule);min-height:32px}
+.tlr .l{font-size:13px;font-weight:600;line-height:1.25;padding:4px 0}
+.tlr .l small{display:none;font:400 11.5px var(--mono);color:var(--sec)}
+.trk{position:relative;height:30px;background:repeating-linear-gradient(90deg,var(--rule) 0,var(--rule) 1px,transparent 1px,transparent 5%)}
+.axis{display:grid;grid-template-columns:repeat(20,1fr);font:500 10.5px var(--mono);color:var(--sec);text-align:center}
+.yrs{position:relative;height:15px;font:600 10.5px var(--mono);color:var(--ink)}
+.yrs span{position:absolute}
+.gb{position:absolute;top:8px;height:14px;background:var(--bar)}
+.gp{position:absolute;top:10px;width:10px;height:10px;background:var(--ink);transform:translateX(-5px) rotate(45deg)}
+.gp.dlm{background:var(--red)}
+.gp.edge{transform:translateX(2px) rotate(45deg)}
+.gn{position:absolute;top:6px;white-space:nowrap;font:400 11.5px/18px var(--mono);color:var(--ink);background:var(--bg);padding:0 4px}
+.gn.in{background:transparent;color:#fff}
+.now{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
+@media (max-width:700px){
+  .tlr{grid-template-columns:1fr;gap:0;padding:4px 0}
+  .tlr .l small{display:block}
+  .gn{display:none}
+  .trk{height:22px}.gb{top:4px}.gp{top:6px}
+  h1{font-size:32px}
+}
+/* said */
+.said h3{margin-top:6px}
+.said ul{margin:4px 0 0;padding-left:18px}
+.said li{margin:2px 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px 28px}
+table.key{border-collapse:collapse;font-size:14px;width:100%;max-width:760px}
+table.key td{padding:4px 12px 4px 0;vertical-align:top;border-top:1px solid var(--rule)}
+footer{border-top:3px solid var(--ink);padding-top:8px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* calm look */
+h1{font-size:32px;font-weight:700;letter-spacing:-.005em;line-height:1.15}
+h2{font-size:20px;font-weight:700;letter-spacing:0}
+a{color:var(--accent)}
+.mono{font:500 12.5px/1.4 var(--body);text-transform:none;letter-spacing:0;color:var(--sec)}
+.block,.card{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px}
+button,.btn{font:500 13px/1 var(--body);text-transform:none;letter-spacing:0;border-color:var(--rule);border-radius:999px;background:var(--surface);padding:0 13px}
+button:hover,.btn:hover{background:var(--hover)}
+button.on,.btn.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+button.link{border-radius:4px;color:var(--accent);background:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search],input[type=text]{border-color:var(--rule);border-radius:8px;background:var(--surface)}
+.meet{border-left:4px solid var(--accent);background:var(--hover);padding:10px 14px;border-radius:0 8px 8px 0;max-width:none}
+.days .c{font:500 11px/1.3 var(--body);border-left:0}
+.days .c.today{background:var(--ink);color:var(--bg);border-radius:4px}
+.mtrack i{border-radius:4px;background:var(--accent)}
+.mtrack i.pt{background:var(--accent);border-radius:2px}
+.mtrack i.dlm{background:var(--red)}
+.prow .pb{height:8px;border-radius:999px;overflow:hidden}
+.prow .pb i{background:var(--accent)}
+.prow .n{font:500 13px var(--body)}
+.prow .d{font:400 12px var(--body);text-transform:none;letter-spacing:0}
+.switch input,.row input{accent-color:var(--accent)}
+.notice{border-color:var(--rule);border-radius:8px;background:var(--hover)}
+.kind,details.notes{border-top:1px solid var(--rule)}
+.lab{font:600 11.5px var(--body);letter-spacing:.02em;text-transform:none;border-color:var(--accent);color:var(--accent);border-radius:4px}
+.axis,.yrs{font-family:var(--body)}
+.gb{border-radius:3px}
+.gn{font:400 12px/18px var(--body);background:var(--surface)}
+.gn.in{color:var(--on)}
+.gp{border-radius:2px}
+footer{border-top:1px solid var(--rule);font-size:13px}
+.top2{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+@media (max-width:760px){.top2{grid-template-columns:1fr}}
+.count{display:flex;gap:18px;flex-wrap:wrap}
+.count div{display:flex;flex-direction:column}
+.count b{font:700 36px/1 var(--display);color:var(--red)}
+.count span{font-size:12px;color:var(--sec);text-transform:uppercase;letter-spacing:.08em}
+.big{font:700 36px/1 var(--display)}
+.obar{height:12px;background:var(--rule);border-radius:999px;overflow:hidden}
+.obar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+</style>
+</head>
+<body>
+<div id="app" class="wrap"></div>
+<script>
+/* Shared ticks for the GitHub Pages copy: talks to the Google Sheet web app instead of Claude's database. */
+(function(){
+  var API = "https://script.google.com/macros/s/AKfycbw6rr5GR6CWEyBISDeIY0QqpqGhFfwLh8r9zYspwqczDFNQJamgIXyVR7Oo5FpF1UMz/exec"; /* <- the web app URL from the Google Sheet script */
+  var live = /^https:\/\/script\.google\.com\//.test(API) || /^http:\/\/127\.0\.0\.1/.test(API);
+  window.CURLEW_BASE = location.href.split("#")[0];
+  window.CURLEW_RO_NOTE = "Read-only: the shared ticks are not connected yet. Please tell Christa Schneider.";
+  var state = null, subs = [], timer = null;
+  function fire(){ subs.forEach(function(f){ try{ f(); }catch(e){} }); }
+  function take(r){ if(r && r.ok){ state = r; fire(); return r; } throw {code:"unavailable", message:(r&&r.error)||"no answer"}; }
+  function load(){ if(!live) return Promise.resolve(); return fetch(API,{redirect:"follow"}).then(function(r){return r.json();}).then(take).catch(function(){}); }
+  function post(o){ if(!live) return Promise.reject({code:"invalid_argument"});
+    if(window.curlewLabel && o.id) o.label = window.curlewLabel(o.id);
+    return fetch(API,{method:"POST",redirect:"follow",body:JSON.stringify(o)}).then(function(r){return r.json();}).then(take); }
+  function snap(id,body){ return {id:id, exists:!!body, data:function(){return body||undefined;}, metadata:{fromCache:false}}; }
+  function listen(make){ var dead=false, f=function(){ if(!dead && state) make(); }; subs.push(f); if(state) setTimeout(f,0); return function(){ dead=true; }; }
+  function coll(name){ var o={
+    orderBy:function(){return o;}, limit:function(){return o;},
+    add:function(){ return Promise.resolve(); }, /* the sheet records every change itself */
+    onSnapshot:function(next){ return listen(function(){
+      var docs = name==="marks" ? Object.keys(state.marks).map(function(k){return snap(k,state.marks[k]);})
+               : name==="log" ? state.log.map(function(e,i){return snap("r"+i,e);}) : [];
+      next({docs:docs, metadata:{fromCache:false}}); }); } };
+    return o; }
+  var db = { collection: coll, doc: function(path){ var p=path.split("/"), id=p[1]; return {
+    set:function(b){ if(p[0]==="marks") return post({act:b.s, id:id, name:b.name, answer:b.answer||""});
+      if(path==="settings/meeting") return post({act:"meeting-set", id:"meeting", name:b.name, date:b.date}); return Promise.resolve(); },
+    "delete":function(){ var nm=""; try{ nm=JSON.parse(localStorage.getItem("curlew-york-ui-v2")||"{}").name||""; }catch(e){}
+      if(p[0]==="marks") return post({act:"undone", id:id, name:nm});
+      if(path==="settings/meeting") return post({act:"meeting-cleared", id:"meeting", name:nm}); return Promise.resolve(); },
+    onSnapshot:function(next){ return listen(function(){
+      if(path==="settings/meeting") next(snap("meeting",state.meeting));
+      else if(path==="settings/log") next(snap("log",{start:state.start||"1970-01-01T00:00:00.000Z"}));
+      else next(snap(id,null)); }); } }; } };
+  var user = { id:function(){return Promise.resolve(null);}, can:function(){return Promise.resolve(live);}, isOwner:function(){return Promise.resolve(false);},
+    me:function(){return Promise.resolve({name:""});}, profiles:function(ids){var r={};[].concat(ids).forEach(function(i){r[i]={name:""};});return Promise.resolve(r);} };
+  window.claude = { use:function(n){ return Promise.resolve(n==="db" ? (live?db:null) : n==="user" ? user : null); } };
+  load();
+  timer = setInterval(function(){ if(!document.hidden) load(); }, 30000);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) load(); });
+})();
+</script>
+<script>
+(function(){
+"use strict";
+var ART_URL = window.CURLEW_BASE || "https://claude.ai/artifact/Ad28to3h6nMCijrFqes32s";
+var PAGE_DATE = "2026-11-11";
+var DEADLINE = Date.UTC(2026,10,30,22,59,59); /* 30 Nov 2026, 23:59 Bern time */
+var DL = "2026-11-30";
+var CONSULT = "https://variationista.github.io/CURLEW_Questionnaire-about-the-metadata-questionnaire/";
+
+/* ---------- WHAT TO DO ----------
+   item: "T|text" task, "D|text" decision, "N|text" note; or {k,t,who,due,d,url,link,pre}
+   "Prompt :: comment" prints the prompt in bold. Group defaults: own (owner), due (label), d (date for overdue). */
+var GROUPS = [
+{key:"all", name:"Everyone", sort:"2026-11-15", own:"everyone", due:"no date",
+ lead:"", meta:"Applies to every team member. Advisory associates are welcome to read along but have no tasks.",
+ sections:[
+  {h:"To do", items:[
+    {k:"T", t:"Vote in Jess Freathy's poll on Discord for the date of the final variable meeting. The poll closes on Thursday 12 November.", due:"by Thu 12 Nov", d:"2026-11-12"},
+    {k:"T", t:"Attend the online final variable meeting", due:"date open, see the Discord poll", d:""},
+    {k:"T", t:"Have all variables and prompts of your group final", due:"30 Nov 2026", d:DL},
+    {k:"T", t:"Give your feedback in the consultation on the metadata questionnaire: rate the topics, pick collection methods, add recommendations", url:CONSULT, link:"Open the consultation"},
+    {k:"T", t:"Early-career researchers only: fill in the Doodle for the February meeting in Bern once Christa sends it. This meeting is not for the whole team; there is no May meeting.", who:"early-career researchers"},
+    {k:"T", t:"Send wishes for website text changes, content ideas and anything you spot on social media to Salina Cuddy", due:"ongoing"}
+  ]},
+  {h:"No owner yet", items:[
+    {k:"T", t:"Consult teachers, social workers or others who work with young people, to design tasks and prompts that target young people's innovating speech", who:"owner open"},
+    {k:"T", t:"Look at trends among young people on social media, e.g. TikTok (perhaps more for phonetics than lexis); keep in mind that trends may be outdated by the end of data collection", who:"owner open"}
+  ]},
+  {h:"Cross-group decisions still open (no owner in the notes; for the PIs to look at)", items:[
+    "D|Judgement tasks :: the speaker's own judgement, or how speakers judge features in their community?",
+    "D|Item order :: same order for everyone was generally agreed (better for data processing); Alina's alternative is block randomisation, e.g. 6 blocks. Confirm.",
+    "D|Word lists and number lists :: all in one go?",
+    "D|Variable answers (e.g. in the bathroom / in the bath) :: is this OK?",
+    "D|Recording control :: is the whole chain recorded? Can the fieldworker control the recording, and can the participant go back and redo?",
+    "D|Prompted answers :: code in the data whether the participant had to be prompted for another answer",
+    "D|Blanks :: a line rather than '…'; length related to word length, but different for morphosyntax; rule for when the first letter is given",
+    "D|Font :: which font for the prompts?",
+    "D|Session of about 2 hours :: build in a break ('if you want to put the kettle on'); separate out the tasks",
+    "D|Spontaneous speech (10 to 15 min) :: where in the session, narrative versus ideology prompts, conversation in pairs (Gary Thoms), recording the metadata during this section",
+    "D|Read speech section :: prioritise variables of interest, but also things the general public reads (e.g. children's stories); simple passages, jokes, headlines",
+    "D|Transcription and forced alignment pipeline :: how does the spontaneous speech section differ?",
+    "D|Fieldworkers :: by region; match for speaker sex? Younger participants helping older ones (e.g. grandchild and grandparent, same researcher)",
+    "D|Items that sit between two groups :: tooth, football, ate/had, BATH (master), commA (banana), /ʒ/ (garage, beige), brown beard (has/got), Ella asks, printer, put up, belt buckle. Agree who keeps which."
+  ]}
+ ]},
+{key:"vowels", name:"Vowels", sort:"2026-11-30a", own:"vowels group", due:"30 Nov 2026", d:DL,
+ lead:"Ryan Shaw-Hawkins with Paul Foulkes", meta:"Phonetics prompts are mostly secure and need tidying up. Notes: Ryan Shaw-Hawkins.",
+ sections:[
+  {h:"Prompt wording", items:[
+    "T|Where's he sitting :: change to 'What's he sitting in?'; check whether it leads to 'water'",
+    "T|The boy is wearing a red shirt :: change 'shirt' to 'top'",
+    "T|What is this :: change to 'What's these'",
+    "T|Three eggs :: change to one",
+    "T|Tuesday :: take out",
+    "T|Tea (tea, teapot, pot of tea, cup of tea) :: could give a whole narrative, and tea is already in an earlier prompt; use 'cup of ____'",
+    "D|The butcher picks up the meat :: 'butchers sell meat'?",
+    "T|Baby :: add 'What's this'; lexical variants bairn, bab, baby",
+    "T|Four directions :: leave the letters in",
+    "T|Fire and ice remake :: 'finish the sentence' should be 'fill in the gap'",
+    "T|Blue square :: shape? sky? Have the whole sentence read out with the blank filled in; square and circle",
+    "T|What animal is this :: change to 'What's this'",
+    "T|You can toast marshmallows over the … :: change to ____; could the answer be 'flame'?",
+    "T|The Eiffel Tower :: change the question type or task; 'tower' is the target anyway",
+    "D|Socks; boot or shoe :: the eye is drawn to the socks; a woman's shoe is gendered; could use 'sh____'",
+    "D|table / desk / bench :: 'T_____'?",
+    "T|… versus ____ :: use a line, because '…' suggests three letters",
+    "D|First letter of the target word :: sometimes given, sometimes not; set a rule"
+  ]},
+  {h:"Images", items:[
+    "T|Wolf :: remove the watermarks",
+    "T|GOOSE :: remove the watermarks",
+    "T|Listening to music :: change the image",
+    "T|Footprint in the sand :: change the image",
+    "T|Towel :: image not big enough; beach towel? (could elicit 'flannel')",
+    "D|What's this: window :: gives window, curtains, window frame; a cartoon window?",
+    "D|neck/throat; mouth/teeth/lips; head/face :: arrows instead of squares?",
+    "D|boat / yacht :: what is a prototypical boat?"
+  ]},
+  {h:"Back to the drawing board", items:[
+    "T|Ball's in the net :: 'in the goal' is not the most natural but clear enough; footie, football, game? Coordinate football with the consonants group",
+    "T|It might ____ tomorrow :: the prompt already shows snow, so drop 'might'",
+    "T|The man has a brown beard :: 'he's got a brown beard' clashes with the lexis group's has/got"
+  ]},
+  {h:"To decide", items:[
+    "D|aunt / auntie :: potential lexical variable?",
+    "D|Poison :: does it lead to variation in the answer?",
+    "D|Pour or put :: leads to lexical variation; prompt 'can you think of another word?'",
+    "D|Brown and white s____ :: is the placement of 'sugar' affecting the vowel length?",
+    "D|good / great :: which one do we get?",
+    "D|horses / ponies :: researcher prompt?",
+    "D|Seal :: might take out; NEAR + /l/",
+    "D|Alphabet :: letters, balloons, capital letters?",
+    "D|Crab :: Welsh regional word 'cranc'",
+    "D|Compass :: are people familiar with it, and what do we do if they are not?",
+    "D|Scottish Vowel Length Rule :: check coverage; 'tide of the sea' versus 'tied the shoe' (morpheme boundary)",
+    "D|Book :: lexically specific b[u]k but l[ʌ]k; add a few of these to test",
+    "D|Unstressed vowels :: commA ('banana' is in the consonants group)",
+    "D|Triphthongs in CURE :: south-west, north-east, Welsh",
+    "D|Splits from heritage languages :: how could this influence minority groups?",
+    "D|Tooth :: also in the lexis group; the lexical prompt is probably the better one",
+    "D|Yesterday the woman ___ her lunch :: ate/had is already in the lexis group",
+    "D|BATH :: 'master' is in the lexis group"
+  ]}
+ ]},
+{key:"cons", name:"Consonants and suprasegmentals", sort:"2026-11-30b", own:"consonants group", due:"30 Nov 2026", d:DL,
+ lead:"to be confirmed", meta:"Agreed next step: define some spare items and check the prompts carefully.",
+ sections:[
+  {h:"To do", items:[
+    "T|Define some spare items",
+    "T|Check all prompts carefully"
+  ]},
+  {h:"Prompt changes", items:[
+    "T|Singing :: nice to get 's____' for 'singer' too, but too difficult? Simplify the repetition in the prompt, especially with the different positions; 'Man is singing the song'?",
+    "T|Watering plants :: new image; also change 'lady'",
+    "T|Books :: the /s/ might affect the fricative for Scouse, so use singular 'book'; 'pile' rather than 'stack' is then not needed",
+    "T|Grasshopper / cricket :: do people distinguish them? BATH + /h/ + lettER need not sit in one prompt; make it simpler",
+    "D|Printer :: do people know what it is (too complex or office-specific)? Morphosyntactic confound with in/into; ordering; '-ing paper' gives place assimilation to bilabial, which Ryan says is useful",
+    "D|Father :: difficult as a target word for formality reasons",
+    "T|Village and city :: not 'image', maybe 'picture'; 'A small village and a big city'",
+    "T|Car engine :: replace with four apples in different colours; might just get 'apples'?",
+    "D|Ella asks :: ordering note; confounds double modals for morphosyntax; 'vanilla ice cream' instead?",
+    "D|Pounds / quid :: is the ordering note necessary? Also combines with the calendar numbers",
+    "T|It'll melt quickly :: contraction 'it'll melt'; blank 'qu____' for quick/quickly",
+    "D|The man's checking :: just 'mobile'? But then you would get 'messages'",
+    "D|Clock :: combine with half past / half eleven? Might be hard for people used to digital clocks",
+    "T|Google :: replace with another -gle word; jungle (problem with the velar)? giggle?",
+    "D|Belt buckle :: should be covered by 'circle' in the vowels shape question",
+    "T|Football :: coordinate with the vowels group",
+    "T|Steep hill :: 10% is not a steep hill",
+    "T|Fall off :: careful about the length of the gaps; people may say 'fall from'; David says it is OK to force off / off of",
+    "T|Berries :: looks similar to the apples question; might get 'four types of berries'; 'These are types of …' instead of 'What are these?'",
+    "T|You're going to hurt your :: change 'going to' to 'gonna'",
+    "T|High street :: remove 's____' and capitalise: 'High ______'",
+    "D|Bottle :: bottle / bottle of water",
+    "T|Ticket :: add a train ticket or another type of ticket",
+    "D|Fence :: looks too severe, maybe a picket fence; preposition stranding and ordering; 'put up' is difficult for many reasons; 'brand new fence' to avoid backtracking; or 'put up a shelf'; or another phrase (set up/off, lot of, got on/off). Morphosyntax asks whether participants can be asked 'put a new x up'.",
+    "T|Better soon :: make the line longer",
+    "D|Battery :: Duracell colours might elicit 'Duracell'; could also be corrected on the spot",
+    "T|Happy New Year :: capitalise; make the fireworks show say '2027' etc.",
+    "D|Off :: get rid of 'off'? Allows off / off of",
+    "T|Headache :: the image looks a bit rashy",
+    "T|Actors :: take out the c, just 'a_____'",
+    "D|Batter :: maybe drop, since we have bread and butter",
+    "T|Human :: make sure there is no /u/",
+    "T|Dates :: specify when the day of the week is wanted too",
+    "D|Golf / health :: epenthesis, with glottal? Other examples: vimto, hamster, prince, mince"
+  ]},
+  {h:"To decide: variables", items:[
+    "D|Missing /ʒ/ :: relevant? 'garage' and 'beige' are in the lexis group",
+    "D|s-retraction :: str-, stj-, spr-, sr- (grocery, Australia), skj- (spew); the full range would be great",
+    "D|'th' in different positions :: medial more likely than initial (brother more likely than there); 'think' lexically specific (tink)",
+    "D|Glottal reinforcement of /k/ :: cackle; thirty etc.?",
+    "D|Stress shifts in verb/noun pairs :: record, research, increase",
+    "D|Blanks :: related to word length, but different for morphosyntax"
+  ]},
+  {h:"To decide: prosody and suprasegmentals", items:[
+    "D|Statement pairs that can be reformulated into questions; plus discourse-pragmatic prompts; plus spontaneous prompts",
+    "D|Read sentences with the same word in different prosodic positions?",
+    "D|Voice quality :: long-term vocal setting, probably from the spontaneous speech; control for it in the segmental analysis (is /k/ backed because of the setting or a segmental variable?)",
+    "D|Ask for a long 'ahhhh'? Also filled pauses",
+    "N|Limits of smartphone microphones :: e.g. spectral tilt"
+  ]}
+ ]},
+{key:"morph", name:"Morphosyntax", sort:"2026-11-22a", own:"morphosyntax group", due:"30 Nov 2026", d:DL,
+ lead:"Oddur Snorrason with David Willis", meta:"Trickier than phonetics because of app logistics and later data processing. Prompts and variables are to be defined and decided by about 20 November. Block led by Oddur Snorrason; notes: Alina Waitzmann.",
+ sections:[
+  {h:"To do", items:[
+    {k:"T", t:"Define prompts and variables, and decide", due:"about 20 Nov", d:"2026-11-22"},
+    "D|Decide which variables get judgement tasks instead of (or next to) production data",
+    "D|Decide the follow-up format :: 'Which one do you use?'; elicitation plus follow-up for every item; binary, yes/no/maybe or scale (a Likert scale needs normalisation questions and complex statistics); 'Could you say this?' and if yes, they say it. Every option costs time.",
+    "D|Prompt type :: written, audio or visual. Preferred: participants read the prompt out themselves, to get more vernacular speech (audio needs headphones and risks accommodation)",
+    "T|Keep contexts minimal; remove them where possible",
+    "T|Spread the items across different blocks (not all together)",
+    "D|Blank notation :: '…' versus ____ (we do not want to show how many words); brackets?",
+    {k:"T", t:"Plan the pilot of task types for the test phase; then possibly cut the number of items", due:"test phase", d:""},
+    "N|Keep in mind :: dialogues instead of context + item (different role feels weird); showing the scenario instead of writing it (time); this elicitation tends to pull people towards the standard"
+  ]},
+  {h:"Comments by variable number", items:[
+    "D|1 :: 'hit by a car': too emotive?",
+    "T|3 :: problem with 'wants' and 'like'; choose a different word",
+    "T|4 :: 'w____' at the start for washing/washed; how many variables for this?",
+    "D|5 :: tense? 'She's having her car washing'? Different context?",
+    "D|6 :: follow-up 'could you say x' in the app so the fieldworker speaks less; simplify the context ('Can you come on Friday?'); problem: 'I'll try'",
+    "D|7 :: 'nobody said ____ about it': 'nobody didn't say' is not elicited; maybe split into two prompts; problem of forcing people to say what they are unlikely to say",
+    "D|8 :: 'did you hear that / thunder?'; problem: 'didn't hear it'; lexical variable on cooking? (Jess Freathy)",
+    "T|9 :: other picture or a GIF to show the interaction",
+    "T|10 :: a name instead; money being exchanged",
+    "T|11 :: 'after school, he sent me a letter / parcel / card'",
+    "T|12 :: 'five fifty' instead of pounds, and the fifty is needed so that it is not 'quid'; use 5.15 to solve that",
+    "T|14 :: 'I' instead of 'you'; change the initial 'read and respond' to just 'read'?; 'd____'; show the ticks on the to-do list",
+    "T|15 :: confusion because of the 'sorry'; needs a concrete noun at the end",
+    "D|16 :: 'I don't have a clue': too formal, maybe idiomatic; a different concept? 'Sorry, I _____ have time'?",
+    "T|17 :: 'I did not but you should ___' (because of stress)",
+    "T|18 :: too formal; 'the rules say …'",
+    "D|19 :: maybe sensitive; do people know what Monopoly is?",
+    "T|22 :: no 'I' at the end, just …",
+    "T|23 :: '…' not in the context",
+    "T|24 :: add 'win' at the end",
+    "D|25 :: 'in order to'?",
+    "D|26 :: tense problem (isn't, wasn't); 'do you remember the time when this player was disqualified'; 'your favourite player was sent off'; 'was disqualified yesterday'",
+    "D|27 :: 'it' at the beginning biases, but leaving it out might give 'not too bad'; 'The pay is not too bad'; a pronoun, not a noun, is needed here",
+    "D|29 :: is zero an option? Take the pronoun out? 'The phone …… just bought is broken', or leave 'phone' out?",
+    "T|30 :: '…' instead of '___ ___'; it was decided to avoid ''d known'; 'I wish' or 'If only I … known'",
+    "D|31 :: shops / gym / town; David prefers 'shop' because it offers much variation",
+    "D|32 :: 'shop' is in the prompt, so people avoid repeating it; 'food' instead of groceries (or 'stuff'); 'After work, I'm going straight _____ to get bread' (problem, discuss later)",
+    "T|33 :: different picture, potentially present tense; 'Last time, we …'",
+    "D|34 :: potentially 'there's'; tense problem; might work if people read all of it out; exclude the blank to include the 'no'? 'There weren't none left'?",
+    "D|37 :: problem: 'remains'",
+    "D|38 :: 'every month' can be emotive; 'see your folks', 'all the time'; to/for? 'comes over'? Secondary: habitual do",
+    "T|39 :: only possible if you ask; get an example from the literature",
+    "T|40 :: at / on the weekend: rewrite the prompt",
+    "D|41 :: literature example; potentially better to ask directly",
+    "T|42 :: 'don't' in the response prompts; 'no worries'; delete the 'really'",
+    "T|43 :: a bit ambiguous; there is no s-initial word following; change the context (problem with 'film' as well)",
+    "T|44 :: different dogs; 'whose bone is it?'"
+  ]}
+ ]},
+{key:"lexis", name:"Lexis and discourse", sort:"2026-11-22b", own:"lexis and discourse group", due:"30 Nov 2026", d:DL,
+ lead:"Jess Freathy with Dave Britain", meta:"Discourse-pragmatic prompts and variables are to be defined and decided by about 20 November, together with morphosyntax. Fifteen items carry a tick in the notes; they stay open here until Christa confirms them.",
+ sections:[
+  {h:"To do", items:[
+    {k:"T", t:"Discourse and pragmatics: define prompts and variables, and decide", due:"about 20 Nov", d:"2026-11-22"},
+    "D|Decide which items move to judgement tasks (intensifiers, 'lowkey', chatting/yapping)",
+    "T|Clean up the instructions (fill in the blank versus answer the question etc.)",
+    "T|Be consistent for states of being and feelings :: emojis, real people or cartoons"
+  ]},
+  {h:"Ticked at the meeting (to be confirmed)", items:[
+    {k:"T", pre:1, t:"Potential of eliciting 'going cinema' etc."},
+    {k:"T", pre:1, t:"'This weekend' :: use an activity in the past ('We went to London on the weekend / at the weekend')"},
+    {k:"T", pre:1, t:"Trousers :: contentious; an image of several pairs would elicit 'trousers' even from speakers who use other variants"},
+    {k:"T", pre:1, t:"Wanna :: could be a problem for some speakers, especially in reading; better 'let's get'"},
+    {k:"T", pre:1, t:"(Did you hear that) Michael ____ yesterday"},
+    {k:"T", pre:1, t:"Cotton on / clock / twig :: will give 'realised', 'worked out' a lot; 'Grandma' is in the prompt but also a question; change to 'Just going to the seaside'"},
+    {k:"T", pre:1, t:"Parents and grandparents :: split them up"},
+    {k:"T", pre:1, t:"Sofa :: images still not acceptable; does it need a person?"},
+    {k:"T", pre:1, t:"Chuffed :: the lottery might be too good; 'You've just won a prize that you're very pleased with. You say: I'm …'"},
+    {k:"T", pre:1, t:"Either :: either prompt could also elicit 'any'"},
+    {k:"T", pre:1, t:"Sue is always happy to look after the cat :: might be elicited as is; double 'neighbour' confusion; likely stress on 'my'"},
+    {k:"T", pre:1, t:"The flat has three rooms :: might need a new image"},
+    {k:"T", pre:1, t:"Where is the cat :: change to 'Where's the cat'"},
+    {k:"T", pre:1, t:"The garage door is red :: change to 'The garage has a red door'"},
+    {k:"T", pre:1, t:"Cookies :: different baked goods instead"}
+  ]},
+  {h:"Further prompt and image changes", items:[
+    "D|Splinter :: change the image?",
+    "D|Chatting / yapping :: the blank is too broad; could judgements work?",
+    "T|Jon :: change to Sam",
+    "D|Who's picking up the children :: gender issues with dad asking",
+    "D|Your friend gives you a lift :: almost two variables at play (thank you / terms for friend)",
+    "T|Throw / chuck / lob :: tricky, ambiguous picture; it looks like the dog is saying it",
+    "D|Angry :: could just ask 'what do you say when you're angry?'",
+    "T|Plaster :: the image looks like the plaster is being removed from the knee",
+    "D|Left-handed :: what was the SED prompt? How can we elicit anything other than 'left-handed'?",
+    "D|Tooth :: the lexical prompt is probably better than the phonetic one; settle with the vowels group"
+  ]},
+  {h:"To decide: lexis", items:[
+    "D|Will anyone default to 'ask Chat'? Up for genuine debate",
+    "D|Evaluative adjectives :: useful, usable data or random noise? What will we do with it? Hard to know without trying",
+    "D|Intensifiers :: judgement questions might work better, as people otherwise use the most standard, inoffensive term; but which of the many options do we ask about?",
+    "D|Lowkey :: could be good as a judgement task",
+    "N|Americanisms :: expected to start in London, with younger speakers",
+    "D|More prompts for the lexical group? (raised with Gerry Docherty; to discuss later)",
+    "D|Lexical variable on cooking? (Jess Freathy, from morphosyntax item 8)"
+  ]},
+  {h:"To decide: discourse", items:[
+    "D|'A few reasons' a friend should take a promotion :: hard to come up with, and very hard to code and map afterwards",
+    "D|Map task instead? :: still needs imagination (describe x to someone who can't see it); not the same 'solidarity' context",
+    "D|Reticent participants cannot be forced :: do we accept less than 100% coverage of a variable?",
+    "D|Include a hypothetical element in the recruitment process?",
+    "D|Use the fieldworker's role to elicit some discourse features?",
+    "D|Speech acts versus more lexical aspects of pragmatics; compliments, apologies?",
+    "D|Structure the spontaneous speech to elicit certain aspects of pragmatics",
+    "N|Asking about childhood and the local area gives access to local features; 'What do you do in your free time? Can you tell me more about that?' lets the speaker become the expert"
+  ]}
+ ]},
+{key:"geo", name:"Localities", plain:"Dave Britain and the geosampling group are working on the locality selection and will report back to the team.", sections:[]},
+{key:"media", name:"Media", sort:"2026-12", own:"Salina Cuddy", due:"no date",
+ lead:"Salina Cuddy", meta:"Social media runs from December 2026 through the whole data collection; the big interactive posts come once recruitment can be pushed.",
+ sections:[
+  {h:"To do", items:[
+    {k:"T", t:"Start the social media push and sign-ups", due:"from Dec 2026"},
+    "T|Check permission for the logo on the Oxford website",
+    "T|Change the Amazon logo in the Canva designs",
+    "T|Press release to drum up interest",
+    "T|Website :: add an outputs tab; an academic output page and a public output page; news stories?",
+    "T|Website :: clearer About text on what the project is",
+    "T|Website :: page addresses such as …/about, …/theteam, …/gallery",
+    "T|Website :: public-facing language ('words' rather than 'lexis')",
+    "T|Website homepage :: add details once known (how long the survey takes, what is paid) and a 'take part' button",
+    "T|Regular formats :: 'Tell us Tuesday'; regional themes (David: 'tell us how people speak in Southampton')",
+    "T|Moderation :: interact when people comment; automatic reply ('thanks for your comment, come back tomorrow for the answer'); polls",
+    "T|Post formats :: posts built on SED maps; 'national talking point' posts that start a debate"
+  ]},
+  {h:"To decide", items:[
+    "D|What is the website for :: conference and academic, or public? (Manchester Voices is a good comparison)",
+    "D|TikTok :: how to handle it; video versus text; copyright; music over posts",
+    "D|Platforms :: Instagram, Facebook, Bluesky for the public; LinkedIn for academic outputs; age targeting; tailor to how people respond",
+    "D|Should the maps and information on social media differ from what people do in the app?",
+    "D|Explain why we collect the data, and prime people about the kind of questions?",
+    "D|Balance :: 'about the team' gives credibility, 'language is cool' gives interest",
+    "D|Influencers :: reshare content (Simon Roper's contacts), or does that take away from ours? Follow them and the team",
+    "N|Content ideas :: scone and roll, jacket potato, 'what do you say that others don't?', strange SED words to guess, Christmas"
+  ]}
+ ]},
+{key:"admin", name:"Administration", sort:"2026-11-30c", own:"Christa Schneider", due:"no date",
+ lead:"Christa Schneider", meta:"Project organisation, consent form and metadata questionnaire.",
+ sections:[
+  {h:"To do", items:[
+    "T|Summarise the notes and produce the timeline (this page)",
+    {k:"T", t:"Participant consent form", due:"end of Nov", d:DL},
+    {k:"T", t:"Next version of the metadata questionnaire (essential and relevant questions, plus additions), using the team's feedback from the consultation", url:CONSULT, link:"Open the consultation", due:"late Nov", d:DL},
+    {k:"T", t:"Send the Doodle for the February meeting in Bern to the early-career researchers (the meeting is not for the whole team; there is no May meeting)", due:"before Feb 2027"}
+  ]},
+  {h:"To decide for the metadata questionnaire", items:[
+    "D|What to scrap :: the Swiss questionnaire is very extensive; it is 45 to 60 minutes of the total interview time",
+    "D|When participants fill it in :: at the end is a risk (tired participants, the fieldworker cannot see them); option: before the test items, with 20 minutes to go through it together",
+    "D|Link the screening questionnaire and the metadata questionnaire; move some questions into the pre-selection",
+    "D|Where people grew up :: ask by distance from a place rather than postcode; needed to catch moves, e.g. to the next village",
+    "D|Exclusion criteria for where participants were brought up (with the metadata questionnaire)",
+    "D|Mandatory or optional questions (in Switzerland most were mandatory)",
+    "D|Leading questions :: all Swiss questions are quite leading, but scale only",
+    "D|Wording for Wales :: the questions assume English; Welsh speakers will assume they are about Welsh",
+    "N|Household composition :: relates to social networks, work contacts etc.",
+    "D|Short, simple questions in the questionnaire or in the interview; order of presentation"
+  ]}
+ ]},
+{key:"app", name:"App and data collection", sort:"2027-01", own:"owner open", due:"no date",
+ lead:"Adrian Leemann and Daniel Wanitsch", meta:"Daniel Wanitsch develops the app with his company. The app depends on the variables being final on 30 November. The data sits in Bern: a NAS has been set up and people will get access soon.",
+ sections:[
+  {h:"To do", items:[
+    {k:"T", t:"Build the app", who:"Daniel Wanitsch", due:"end of Jan 2027", d:"2027-01-31"},
+    {k:"T", t:"Test the app with 16 people (stratified sample), for content and technical problems; feed the feedback back in; repeat until it runs smoothly", who:"Daniel Wanitsch and team", due:"end of Feb or early Mar 2027"},
+    "T|Technical checks in the test :: can people open the app, does the device work, is the audio quality good?",
+    {k:"T", t:"Develop and practise the protocol (how to introduce the app and run a session); someone observes sessions; use this to train students", who:"team", due:"around Mar 2027"},
+    {k:"T", t:"Start data collection", who:"fieldworkers", due:"around Mar 2027"},
+    "T|Sign-up pipeline :: sign-up, unique ID, eligibility check by people and AI, assignment to the data collector for the region, slot booking, recording, upload to the servers in Bern, questionnaire, payment, AI transcription, human check",
+    "T|Task list for fieldworkers, as much runs in parallel",
+    "T|TextGrids with the key variables; Whisper mainly for the spontaneous speech; everything is checked by hand",
+    "T|Team interface to track progress and see the map fill in; interface that puts phonetic features straight into a vowel plot",
+    "T|Recruitment :: as the pool of sign-ups grows, target the areas that still need more people",
+    "N|Whisper can be confidently wrong, not only biased by its confidence score, so every transcript needs a human check"
+  ]},
+  {h:"To decide", items:[
+    "D|Short interest survey on the website :: is English the first language? 'English only', otherwise a drop-down of other languages; gender as free text; place as free text rather than a drop-down",
+    "D|Short recording at registration :: shows people can use the technology, removes bots (text-based checks too), filters people who only want the money",
+    "D|Prevent people signing up several times",
+    "D|App as a website instead of a download? :: doubles the work; an app can save data, a website can lose it",
+    "D|Zoom and devices :: older working-class participants may lack a laptop plus a phone; libraries; send fieldworkers to places where it proves hard",
+    "D|Recording control in the app :: fieldworker in control? Going back and redoing? Follow-up question shown in the app?",
+    "D|Fieldworker notes per prompt during the session (hesitation, several answers)",
+    "D|Train Whisper on incoming data? Could the confidence score bias the checker? Checkers who know the region; check soon after collection",
+    "D|Should the questionnaire come after the recording, or earlier? (timing still open)"
+  ]}
+ ]},
+{key:"pi", name:"PIs", sort:"9999", own:"PIs (proposed)", due:"no date",
+ lead:"Adrian Leemann, Dave Britain, Paul Foulkes, David Willis", meta:"Proposed: the PIs own ethics and data sharing (to be confirmed by the PIs).",
+ sections:[
+  {h:"Ethics and data sharing", items:[
+    "T|Confirm that Bern's ethics approval (through data management) covers all partners :: Oxford accepts Bern's data protection as ethical approval; York's stance is not known",
+    "T|Data protection and data sharing agreement between Britain and Bern",
+    "D|GDPR :: concerns about the data collected at sign-up, more so with a voice recording",
+    "D|Libraries as recording places :: logistical, consent and ethical issues?",
+    "D|Street interviews for social media :: ethics?",
+    "D|Recordings from the public domain for social media (e.g. a celebrity from a region)"
+  ]},
+  {h:"Participant questions raised", items:[
+    "N|Age ranges noted :: young speakers 18 to 30, older speakers 60 to 70",
+    "D|Gender beyond two categories :: perhaps a few small subgroups",
+    "D|People who are not selected :: a short survey, e.g. with the lexical and morphosyntactic questions that were problematic?",
+    "D|Compensation :: 40 pounds here versus 100 francs in the Swiss survey"
+  ]},
+  {h:"Related", items:[
+    "T|Allocate owners for the open cross-group decisions listed under 'Everyone'"
+  ]}
+ ]}
+];
+
+/* ---------- LONG-RUN CHART (months: 0 = Dec 2026 … 19 = Jul 2028) ---------- */
+var MONTHS = ["D","J","F","M","A","M","J","J","A","S","O","N","D","J","F","M","A","M","J","J"];
+var TL = [
+ {l:"Variables and prompts final", p:0, dl:1, n:"30 Nov 2026, hard deadline"},
+ {l:"Locality selection", n:"Dave Britain and the geosampling group"},
+ {l:"Social media push and sign-ups", s:0, e:19, n:"from Dec, through data collection"},
+ {l:"App: build", s:0, e:2, n:"built by end of Jan"},
+ {l:"Meeting in Bern, early-career researchers", p:2.5, n:"Feb, Doodle to follow; no May meeting"},
+ {l:"App: test with 16 people, finalise", s:2, e:3.2, n:"end of Feb or early Mar"},
+ {l:"Protocol practised, collection starts", p:3.5, n:"around Mar"},
+ {l:"Recording", s:3.5, e:15.5, n:"one year, spring 2027 to spring 2028"},
+ {l:"Checking and coding", s:3.5, e:20, n:"from the start of collection, throughout"},
+ {l:"Buffer for collection", s:17, e:19, n:"early summer 2028"}
+];
+
+/* ---------- WHAT WAS SAID (record; items of each group are added from GROUPS) ---------- */
+var SAID = [
+{name:"General and whole-survey points", when:"Thursday and Friday", blocks:[
+ {h:"Opening discussion", items:[
+  "Gerry Docherty asked how CURLEW differs from the SED (developments, innovations) and about the differences between prompts, reading passages and the spontaneous speech section",
+  "Reading passage: simple passages, jokes, headlines etc.",
+  "More prompts for the lexical group? To discuss later"]},
+ {h:"Friday: open points from Thursday", items:[
+  "Phonetics prompts are mostly secure and just need tidying up",
+  "Morphosyntax and discourse-pragmatics are trickier because of app logistics and later data processing; focus on these over the next couple of weeks",
+  "Judgement tasks may be used for morphosyntax and discourse-pragmatics instead of trying to secure production data",
+  "Pilot different tasks during the test phase to assess suitability",
+  "Judgement tasks: self-judgements, or how speakers judge features in their community?",
+  "Consult teachers and social workers to design tasks that target young people's innovating speech",
+  "Look at trends among young people on social media, e.g. TikTok; be aware of quick, trend-based changes that may not be relevant by the end of the project",
+  "Young speakers 18 to 30, older speakers 60 to 70"]},
+ {h:"Session and spontaneous speech", items:[
+  "Data collection takes about 2 hours; is there a break? SDATS had none; 'if you want to put the kettle on…'; aim to separate out the tasks",
+  "Spontaneous speech 10 to 15 minutes: narrative prompts plus language and dialect ideology prompts",
+  "SDATS did this at the end, when participants were tired; could it prime them? Dialect mode versus performative mode",
+  "Gary Thoms: conversations in pairs could avoid accommodation; logistically difficult; could be a separate part of the data collection",
+  "Narrative prompts versus conversation: not a balanced chat, participants won't hear us much",
+  "Record the questionnaire or metadata during the spontaneous speech (a separate task)? Takes time; two tasks (performing, natural)",
+  "Read speech: prioritise variables of interest but also things the general public reads, e.g. children's stories",
+  "'What do you do in your free time? Can you tell me more about that?' gives the speaker the chance to be the expert"]},
+ {h:"Recording, order and processing", items:[
+  "Is the recording capturing the whole chain? What if the participant presses stop but needs prompting again; fieldworker in control? Redo?",
+  "Code whether the participant had to be prompted for another answer",
+  "Everything mixed in random order, by category or by task? Different orders per participant are probably bad for data processing; same order for everyone generally agreed; Alina suggests block randomisation, e.g. 6 blocks",
+  "Blanks should relate to word length, but differ for morphosyntax",
+  "Which font for the prompts?",
+  "Pipeline for transcription and forced alignment; how does the spontaneous speech differ?",
+  "Fieldworker regions; match for speaker sex? Youngsters could help older speakers, e.g. grandchild and grandparent with the same researcher"]}
+], plan:"all"},
+{name:"Vowels", when:"Thursday, phonetics and phonology 1", plan:"vowels", blocks:[]},
+{name:"Consonants and suprasegmentals", when:"Thursday, phonetics and phonology 2", plan:"cons", blocks:[]},
+{name:"Morphosyntax", when:"Thursday", plan:"morph", blocks:[
+ {h:"General discussion", items:[
+  "Prompt types: written, audio, visual. Audio might need headphones; a recording can cause accommodation even in a different dialect; the original idea was a voice that would not produce the feature; reading is more neutral",
+  "Framing as small dialogues rather than context + item sentence; problem: a different role feels weird",
+  "Showing the scenario instead of writing it down; problem: time",
+  "Preferred option: participants read out the prompt themselves, to get more vernacular",
+  "Elicitation in general can be really hard; a judgement might be informative as a complement",
+  "Other studies mostly use judgement tasks; a follow-up question would give that information",
+  "Rather yes/no questions for the problematic variables",
+  "Context should be as few words as possible, so it takes less time",
+  "Piloting to test how well it works, then potentially cutting the number",
+  "Elicitation this way likely pulls people towards a standard",
+  "Problem with all options: time"]}
+]},
+{name:"Lexis and discourse", when:"Thursday", plan:"lexis", blocks:[]},
+{name:"Metadata questionnaire", when:"Friday", plan:"admin", blocks:[
+ {h:"Discussion", items:[
+  "Christa went through the English translation of the Swiss atlas questionnaire and will create the next version; everyone can comment on the draft (a link will follow); there is still a lot that could be scrapped",
+  "In Switzerland everyone participated; higher compensation there (100 francs versus 40 pounds)?",
+  "Most Swiss questions were mandatory, some optional (most people answered them anyway)",
+  "The fieldworker won't see what participants are doing while they fill it in",
+  "People probably don't know their postcode; better to ask in terms of distance from a place"]}
+]},
+{name:"Locality selection", when:"Friday. Record of the discussion; the work now sits with Dave Britain and the geosampling group.", blocks:[
+ {h:"Draft presented by Adrian Leemann", items:[
+  "141 clusters: 100 England, 25 cities, 16 Wales. Four decisions are needed within a month so that advertising for recruitment can start. Clustering must be decided before recruitment is rolled out.",
+  "Clusters built on Yves Scherrer's digitisation of the SED, with irrelevant topics such as farming removed: 787 variables",
+  "Map: purple clusters are discontinuous, yellow have 1 SED locality, blue more than 1",
+  "Yorkshire example: York is likely to be more standard, so a rural village is likely to be more representative",
+  "Cities are trickier to manage because of mobility and dynamism (JW)",
+  "South Wales is much more urban; Alina's suggestion gave similar clusters (DW)",
+  "Discussion with Devyani Sharma: need for a middle-class ethnic sample as well; an older group for Caribbean communities; do not assume an L2 background beyond third-generation migrants",
+  "White British speakers can also be in a multi-ethnic network (LB)",
+  "Could go back to the original 60 to 60 split, which avoids the question of when to choose rural and when urban (DB)",
+  "Next step recorded: Dave Britain contacts Jess Freathy and Josh Coombs to work on localities"]},
+ {h:"The four decisions", items:[
+  "1 Weighting :: 787 variables from Yves Scherrer's digitised SED (farming etc. removed); unbalanced across types but weighted a third each. Weight by the share of each variable group? Lexis is over-represented at present.",
+  "2 Adjacent or discontinuous clusters?",
+  "3 Which of the 4 candidates per cluster :: most typical, geographical middle, most stable, or largest town (easiest to recruit). Devise a consistent plan.",
+  "4 Cities :: city plus commuters or city only; record in both the city and its allocated locality, or let the city represent the locality?"]},
+ {h:"To weigh up for these decisions", items:[
+  "125 regions, some representing a city alone (more cities, more granularity); ONS built-up areas could help (DB)",
+  "Or the biggest urban centre in each region; not always a large one, e.g. the south-west (DB)",
+  "Urban and rural balance (PF, DW) :: resolved by the specific locality selection, or back to the original 60 to 60 split (DB)",
+  "SED sampling effect :: more sampling in the south and south-west gives those regions more weight in the clustering (DB)",
+  "SED localities are all very rural :: does this complicate choosing urban places within a cluster, e.g. Warrington?",
+  "Administrative shifts since the 1950s :: e.g. Middlesbrough is no longer in the same county (JW)",
+  "Net migration per region? (LB) :: statistics exist at different levels of detail (DB)",
+  "Geosocial leanings :: do smaller places in the north-west lean towards Liverpool or Manchester? (JW)",
+  "One blanket plan or an informed approach per cluster? (PF)",
+  "Wales, 14 localities + 2 cities :: SAWD is hard to access, the SED method gives no effective clusters; current clustering uses Travel to Work Areas; merge the smallest areas with the smallest neighbour (DW). Apply TTWA in England too? (DB)",
+  "Cities with high diversity :: how to reach multi-ethnic community norms (RSH); certain areas of certain cities (JW); subsamples supplement city sampling (DW)",
+  "Ethnicity :: not controlling for it risks a non-systematic sample (DB); a network approach could control for input (JW); a non-deterministic approach is needed (LB)",
+  "Staggered roll-out from south to north? (JW) :: more variation is expected in the north (PF)",
+  "Access and logistics, the team's own networks (EC) :: a secondary concern (DB)"]},
+ {h:"Also raised", items:[
+  "Ethnic minority subsamples :: only a young sample is planned; Devyani Sharma stressed a middle-class sample and an older group for Caribbean communities",
+  "What is the census after :: what English looks like in each place, or for people who have only ever spoken English? Language competence; centralise English in recruitment?"]}
+]},
+{name:"Data collection and app", when:"Friday", plan:"app", blocks:[
+ {h:"Overall timeline given at the meeting", items:[
+  "Variables and locations sorted by the end of November",
+  "App built by the end of January 2027; tested and finalised by the end of February or early March 2027",
+  "Recording for a year, spring 2027 to spring 2028; buffer in early summer 2028",
+  "Social media push from December and for the duration of data collection; sign-ups during the same time",
+  "Checking and coding start with the data collection and run in the background throughout",
+  "Two tracks in parallel: the app (depends on the variables) and participant sign-up",
+  "How many people did you say no to? It will be higher in the UK because of the narrow field of who can take part"]}
+]},
+{name:"Social media and public engagement", when:"Friday", plan:"media", blocks:[
+ {h:"Status reported", items:[
+  "Homepage is participant-focused; About us / staff is up and running; no outputs yet",
+  "A few things posted so far; not pushed, as the survey is not yet there",
+  "Canva designs exist for all platforms; mostly about taking part, so they are posted when that is possible",
+  "Papers on Instagram might not be helpful; LinkedIn for academic outputs and connections",
+  "Confusing people drums up interest; Christmas is dominant enough to be understood by those who don't celebrate it",
+  "Variety keeps things fresh: different methods for different attention"]}
+]},
+{name:"Ethics and data protection", when:"Friday, raised in the social media discussion", plan:"pi", blocks:[
+ {h:"Discussion", items:[
+  "No mention yet of the participant consent form: does it come through Bern? Is it straightforward?",
+  "Bern's ethics approval comes through data management; Oxford accepts Bern's data protection as ethical approval; York's stance is not known (Salina is at York); the lead institution usually does ethics, so Bern's approval should cover everyone"]}
+]},
+{name:"Next steps as recorded on Friday", when:"Friday", blocks:[
+ {h:"", items:[
+  "Christa summarises the notes and produces the timeline",
+  "There is no May meeting; there is a meeting in February, a Doodle will follow",
+  "Clarified after the meeting: the February meeting takes place in Bern and is only for the early-career researchers, not for the whole team",
+  "Consonants: define some spares and check the prompts carefully",
+  "Morphosyntax and discourse: define prompts and variables, decide by the third week of November",
+  "Everything is done by the end of November",
+  "Dave Britain contacts Jess Freathy and Josh Coombs to work on localities",
+  "Consent form done by the end of November; metadata questionnaire ready by late November",
+  "Online meeting in the third week of November (not 18th to 20th)",
+  "Update of 11 November: the Discord poll for this meeting offers dates between 19 and 26 November, so the date is open again"]}
+]}
+];
+
+var PEOPLE = [
+ ["AL","Adrian Leemann","PI"],["DB","Dave Britain","PI"],["PF","Paul Foulkes","PI"],["DW","David Willis","PI"],
+ ["RSH","Ryan Shaw-Hawkins","team; notes for vowels"],["AW","Alina Waitzmann","team; notes for morphosyntax"],
+ ["","Oddur Snorrason","team; led the morphosyntax block"],
+ ["LB","Liz Blackwell","team"],["EC","Eve Canning","team"],["","Jess Freathy","team"],["","Josh Coombs","team"],
+ ["","Salina Cuddy","media"],["","Daniel Wanitsch","developer and IT"],["","Christa Schneider","project organisation"],
+ ["JW","Jessica Wormald","University of York, Advisory Associate"],
+ ["","George Bailey","University of York, Advisory Associate; attended"],
+ ["","Claire Childs","University of York, Advisory Associate; attended"],
+ ["","Gerry Docherty","advisory board, no active role"]
+];
+
+/* ---------- flatten ---------- */
+var ITEMS = [], BYG = {};
+GROUPS.forEach(function(g){
+  BYG[g.key] = g; g.items = [];
+  g.sections.forEach(function(s,si){ s.items.forEach(function(it,ii){
+    var o = typeof it==="string" ? {k:it.charAt(0), t:it.slice(2)} : it;
+    var x = {id:g.key+"-"+si+"-"+ii, g:g.key, h:s.h, k:o.k, t:o.t, pre:!!o.pre, url:o.url||"", link:o.link||"",
+      who:o.who||g.own, due:o.due||g.due, d:(o.d!==undefined?o.d:(o.due?"":g.d||""))};
+    x.hay = (x.t+" "+x.who+" "+s.h+" "+g.name).toLowerCase();
+    g.items.push(x); ITEMS.push(x);
+  });});
+});
+function search(q){ q=String(q||"").trim().toLowerCase(); return q?ITEMS.filter(function(x){return x.hay.indexOf(q)>=0;}):ITEMS.slice(); }
+if (typeof document === "undefined") { globalThis.__CURLEW = {GROUPS:GROUPS, ITEMS:ITEMS, search:search, PEOPLE:PEOPLE, SAID:SAID}; return; }
+
+/* ---------- state ---------- */
+var marks = {}, meeting = null, loaded = false, loadNote = "Loading the shared ticks…";
+var db = null, user = null, uid = null, canWrite = null, busy = {};
+var q = "", editing = null, draft = "", reveal = {}, flash = "", meetDraft = "", logs = [], logAll = false, logStart = "", isOwner = false, BYID = {};
+ITEMS.forEach(function(x){BYID[x.id]=x;});
+window.curlewLabel=function(id){var x=BYID[id];return x?BYG[x.g].name+": "+x.t.split(" :: ")[0].slice(0,120):id;};
+var LS = "curlew-york-ui-v2", ui = {group:"all", openOnly:true, name:""};
+try { var saved = JSON.parse(localStorage.getItem(LS)||"null"); if(saved&&BYG[saved.group]) ui.group=saved.group; if(saved&&saved.openOnly===false) ui.openOnly=false; if(saved&&typeof saved.name==="string") ui.name=saved.name.slice(0,60); } catch(e){}
+function saveUi(){ try{ localStorage.setItem(LS, JSON.stringify(ui)); }catch(e){} }
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(t){var i=t.indexOf(" :: "); return i<0?esc(t):"<b>"+esc(t.slice(0,i))+"</b> · "+esc(t.slice(i+4));}
+function $(id){return document.getElementById(id);}
+function ymd(dt){return dt.getFullYear()+"-"+("0"+(dt.getMonth()+1)).slice(-2)+"-"+("0"+dt.getDate()).slice(-2);}
+function pd(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function nice(s){var d=pd(s.slice(0,10));return d.getDate()+" "+MON[d.getMonth()];}
+function niceLong(s){var d=pd(s.slice(0,10));return d.getDate()+" "+["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]+" "+d.getFullYear();}
+function isoLocalDay(iso){var d=new Date(iso);return isNaN(d)?PAGE_DATE:ymd(d);}
+function isDone(x){var m=marks[x.id];return !!m && (x.k==="T"?m.s==="done":m.s==="decided");}
+function counts(g){var r={T:0,D:0,N:0,done:0,act:0};g.items.forEach(function(x){r[x.k]++;if(x.k!=="N"){r.act++;if(isDone(x))r.done++;}});return r;}
+function who(id){return '<span data-uid="'+esc(id||"")+'">someone</span>';}
+function whoM(m){return (m&&m.name)?esc(m.name):who(m&&m.by);}
+function writable(){return !!db && canWrite!==false;}
+
+/* ---------- pieces ---------- */
+function headHtml(){
+  var ms=DEADLINE-Date.now(), days=Math.floor(ms/86400000), h;
+  if(ms<=0) h='The variables were due on <span class="red">30 November</span>';
+  else if(days===0) h='The variables are final <span class="red">today</span>';
+  else h='<span class="red">'+days+(days===1?' day':' days')+'</span> until the variables are final';
+  var last=PAGE_DATE; Object.keys(marks).forEach(function(k){var a=marks[k]&&marks[k].at; if(a){var d=isoLocalDay(a); if(d>last) last=d;}});
+  if(meeting&&meeting.at){var md=isoLocalDay(meeting.at); if(md>last) last=md;}
+  return '<p class="mono" style="letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600">CURLEW · After York</p><h1 style="margin-top:6px">'+h+'</h1>'
+   +'<p class="dek">What each group has to do after the York meeting and by when, with the hard deadline for all variables on 30 November 2026, 23:59 Bern time.</p>'
+   +'<p class="mono byline">Compiled by Christa Schneider from the notes of 5 and 6 November 2026 · updated '+esc(niceLong(last))+'</p>';
+}
+function meetHtml(){
+  var h=(meeting&&meeting.date)?'<p><b>Final variable meeting, online.</b> The date was chosen in Jess Freathy’s poll on Discord.</p>':'<p><b>Final variable meeting, online.</b> The date is still open. Jess Freathy’s poll on Discord offers dates between <b>19 and 26 November</b> and closes on Thursday 12 November, so please vote now.</p>';
+  if(meeting&&meeting.date){
+    h+='<p><span class="lab">Date chosen</span> <b>'+esc(["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][pd(meeting.date).getDay()]+" "+niceLong(meeting.date))+'</b> <span class="mono">set by '+whoM(meeting)+(meeting.at?', '+esc(nice(isoLocalDay(meeting.at))):'')+'</span></p>';
+    if(writable()) h+='<div class="acts"><button type="button" id="mt-clear" data-meet="">Change: no date yet</button></div>';
+  } else {
+    h+='<p><span class="lab">Poll result</span> No result yet.</p>';
+    if(writable()) h+='<div class="acts"><label class="mono" for="mt-date">Result known? Set the date:</label><input type="date" id="mt-date" min="2026-11-12" max="2026-11-30" value="'+esc(meetDraft)+'" style="font:400 14px var(--body);min-height:32px;padding:2px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)"><button type="button" id="mt-set" data-meetset="1">Set date</button></div>';
+  }
+  return h;
+}
+function stripHtml(){
+  var today=ymd(new Date());
+  if(today>DL) return '<p class="lede">The 30 November deadline has passed.</p>';
+  var days=[], d=pd(today); while(ymd(d)<=DL){days.push(ymd(d)); d.setDate(d.getDate()+1);}
+  var n=days.length, cols='grid-template-columns:repeat('+n+',minmax(0,1fr))';
+  var h='<div class="days" style="'+cols+'" role="img" aria-label="Days from today to 30 November">';
+  days.forEach(function(s,i){var dt=pd(s),we=dt.getDay()===0||dt.getDay()===6;
+    h+='<div class="c'+(we?' we':'')+(i===0?' today':'')+(s===DL?' dl':'')+'">'+WD[dt.getDay()].charAt(0)+'<br>'+dt.getDate()+'</div>';});
+  h+='</div><p class="mono">Black cell: today, '+esc(nice(today))+' · red: 30 Nov deadline</p>';
+  var mdate=meeting&&meeting.date;
+  var MS=[
+   {a:today,b:"2026-11-12",when:"By Thu 12 Nov",what:"Vote in the Discord poll",who:"everyone"},
+   {a:mdate||"2026-11-19",b:mdate||"2026-11-26",when:mdate?nice(mdate):"Date open, 19 to 26 Nov",what:"Online final variable meeting",who:"everyone"},
+   {a:"2026-11-20",b:"2026-11-20",when:"About 20 Nov",what:"Morphosyntax and discourse prompts and variables decided",who:"morphosyntax; lexis and discourse"},
+   {a:DL,b:DL,when:"30 Nov",what:"All variables and prompts final (all variable groups) · consent form (Christa) · metadata questionnaire, next version (Christa, late November)",who:"",dl:1}
+  ];
+  MS.forEach(function(m){
+    h+='<div class="ms"><p class="t"><span class="mono'+(m.dl?' red':'')+'">'+esc(m.when)+'</span> &nbsp;<b>'+esc(m.what)+'</b>'+(m.who?' <span class="mono">'+esc(m.who)+'</span>':'')+'</p>';
+    if(m.b<today){ h+='<p class="mono">passed</p></div>'; return; }
+    var i0=Math.max(0,days.indexOf(m.a<today?today:m.a)), i1=days.indexOf(m.b); if(i1<0) i1=n-1;
+    h+='<div class="mtrack" style="'+cols+'"><i class="'+(i0===i1?'pt':'')+(m.dl?' dlm':'')+'" style="grid-column:'+(i0+1)+' / '+(i1+2)+'"></i></div></div>';
+  });
+  return h;
+}
+function isNov(x){ if(x.k==="N") return false; var vg={vowels:1,cons:1,morph:1,lexis:1}[x.g];
+  return (vg&&x.due!=="test phase")||(x.d&&x.d<=DL)||(x.g==="admin"&&x.k==="D")||(x.g==="all"&&!!x.url); }
+function overallHtml(){
+  var t=0,d=0,lt=0,ld=0; ITEMS.forEach(function(x){ if(x.k==="N") return; if(isNov(x)){t++; if(isDone(x)) d++;} else {lt++; if(isDone(x)) ld++;} });
+  var pct=t?Math.round(d/t*100):0;
+  return '<div style="display:flex;align-items:baseline;gap:10px"><span class="big">'+pct+'%</span><span class="mono">'+d+' of '+t+' tasks and decisions done</span></div><div class="obar" role="img" aria-label="'+pct+' percent complete"><i style="width:'+pct+'%"></i></div><p class="mono">Later or undated, not counted above: '+ld+' of '+lt+'</p>';
+}
+function countHtml(){
+  var ms=DEADLINE-Date.now(); if(ms<=0) return '<div><b>0</b><span>deadline passed</span></div>';
+  var sec=Math.floor(ms/1000),d=Math.floor(sec/86400),hh=Math.floor(sec%86400/3600),mm=Math.floor(sec%3600/60),ss=sec%60;
+  return '<div><b>'+d+'</b><span>days</span></div><div><b>'+hh+'</b><span>hours</span></div><div><b>'+mm+'</b><span>min</span></div><div><b>'+ss+'</b><span>sec</span></div>';
+}
+function clock(iso){var d=new Date(iso); if(isNaN(d)) return ""; return nice(ymd(d))+", "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);}
+function logHtml(){
+  if(!db) return '<p class="lede">The change log is not available in this view.</p>';
+  if(!logStart) return '<p class="lede">The change log has not been started yet. Changes made before it starts are not recorded here.</p>'+(isOwner?'<p><button type="button" id="log-start" data-logstart="1">Start the change log now</button></p>':'');
+  var list=logs.filter(function(e){return e.at>=logStart;});
+  var top='<p class="mono">Recording since '+esc(clock(logStart))+'</p>'+(isOwner?'<p><button type="button" class="link" id="log-stop" data-logstop="1">Stop and hide the change log</button></p>':'');
+  if(!list.length) return top+'<p class="lede">No changes recorded yet. Every tick, undo, decision and reopening will be listed here with name and time.</p>';
+  var verbs={done:"ticked",undone:"unticked",decided:"decided",reopened:"reopened","meeting-set":"set the meeting date to","meeting-cleared":"cleared the meeting date"};
+  var show=logAll?list:list.slice(0,15);
+  var h=top+'<ul class="items">'+show.map(function(e){
+    var x=BYID[e.id], t=x?x.t.split(" :: ")[0]:"", head=t.length>90?t.slice(0,88)+"…":t;
+    var whoTxt=e.src==="notes"?'From the meeting notes':whoM(e);
+    var body=e.id==="meeting"?(e.date?esc(niceLong(e.date)):""):(x?'<span class="mono">'+esc(BYG[x.g].name)+'</span> '+esc(head):esc(e.id));
+    return '<li><span><span class="mono">'+esc(clock(e.at))+'</span> · <b>'+whoTxt+'</b> '+esc((e.act==="undone"&&x&&x.k==="D")?"reopened":(verbs[e.act]||e.act))+' '+body+(e.answer?' <span class="ans">→ '+esc(e.answer)+'</span>':'')+(e.prev?' <span class="mono">(previous answer: '+esc(e.prev)+')</span>':'')+'</span></li>';
+  }).join("")+'</ul>';
+  if(list.length>15) h+='<p><button type="button" class="link" id="log-more" data-logall="1">'+(logAll?'Show the latest 15 only':'Show all '+list.length+' changes')+'</button></p>';
+  return h;
+}
+function logAdd(o){ if(!db||!logStart) return; try{ db.collection("log").add(stamp(o)).then(null,function(){}); }catch(e){} }
+function pickerHtml(){
+  return GROUPS.map(function(g){return '<a class="btn'+(ui.group===g.key&&!q?' on':'')+'" id="pk-'+g.key+'" href="#g-'+g.key+'"'+(ui.group===g.key?' aria-current="true"':'')+'>'+esc(g.name)+'</a>';}).join("");
+}
+function progressHtml(){
+  var gs=GROUPS.filter(function(g){return !g.plain;}).sort(function(a,b){return a.sort<b.sort?-1:1;});
+  return gs.map(function(g){var c=counts(g),pct=c.act?c.done/c.act*100:0;
+    var dueTxt={all:"first due 12 Nov",morph:"about 20 Nov, then 30 Nov",lexis:"about 20 Nov, then 30 Nov",vowels:"30 Nov",cons:"30 Nov",admin:"end of Nov",media:"from Dec 2026",app:"end of Jan 2027",pi:"no date"}[g.key];
+    return '<a class="prow" href="#g-'+g.key+'"><span><b>'+esc(g.name)+'</b><span class="d">'+esc(dueTxt)+'</span></span><span class="pb"><i style="width:'+pct.toFixed(1)+'%"></i></span><span class="n">'+c.done+' of '+c.act+'</span></a>';
+  }).join("");
+}
+function itemHtml(x){
+  var m=marks[x.id], done=isDone(x), today=ymd(new Date()), h="";
+  if(x.k==="T"){
+    var over=!done&&x.d&&x.d<today;
+    h+='<li class="task'+(done?' done':'')+'"><label class="row" for="cb-'+x.id+'"><input type="checkbox" id="cb-'+x.id+'" data-tick="'+x.id+'"'+(done?' checked':'')+(writable()?'':' disabled')+'><span class="tx">'+fmt(x.t)+(x.url?' <a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.link||x.url)+'</a>':'')+'</span></label>';
+    h+='<div class="meta"><span class="mono">'+esc(x.who)+'</span><span class="mono'+(over?' red':'')+'">'+esc(x.due)+(over?' · overdue':'')+'</span>';
+    if(x.pre&&!done) h+='<span class="lab">Ticked at the meeting (to be confirmed)</span>';
+    if(done) h+='<span class="mono">ticked by '+whoM(m)+', '+esc(nice(isoLocalDay(m.at)))+'</span>'+(writable()?'<button type="button" class="link" id="un-'+x.id+'" data-undo="'+x.id+'">undo</button>':'');
+    h+='</div></li>';
+  } else if(x.k==="D"){
+    h+='<li class="dec'+(done?' decided':'')+'"><div class="tx">'+fmt(x.t)+'</div><div class="meta">';
+    if(done){
+      h+='<span class="lab">Decided</span><span class="ans">'+esc(m.answer||"")+'</span><span class="mono">'+(m.src==="notes"?'decided at the meeting, per the notes':'by '+whoM(m)+', '+esc(nice(isoLocalDay(m.at))))+'</span>'+(writable()?'<button type="button" class="link" id="un-'+x.id+'" data-undo="'+x.id+'">reopen</button>':'');
+    } else if(editing===x.id){
+      h+='<form class="af" data-form="'+x.id+'"><label class="mono" for="ans-'+x.id+'">What did we decide?</label><input type="text" id="ans-'+x.id+'" maxlength="300" autocomplete="off"><button type="submit" id="sv-'+x.id+'">Save</button><button type="button" id="cn-'+x.id+'" data-cancel="1">Cancel</button></form>';
+    } else {
+      h+='<span class="mono">Open</span>'+(writable()?'<button type="button" id="md-'+x.id+'" data-decide="'+x.id+'">Mark decided</button>':'');
+    }
+    h+='</div></li>';
+  } else h+='<li><span>'+fmt(x.t)+'</span></li>';
+  return h;
+}
+function listByKind(items,k,gkey,searching){
+  var all=items.filter(function(x){return x.k===k;}); if(!all.length) return "";
+  var hideDone=ui.openOnly&&!searching&&!reveal[gkey+k];
+  var done=all.filter(isDone).length, show=hideDone?all.filter(function(x){return !isDone(x);}):all;
+  var title=k==="T"?"Tasks":"Decisions", word=k==="T"?"done":"decided";
+  var h='<div class="kind"><h3>'+title+'</h3><span class="mono">'+done+' of '+all.length+' '+word+'</span></div>';
+  var lastH=null; h+='<ul class="items">';
+  show.forEach(function(x){ if(x.h!==lastH){ h+='</ul><p class="mono sub">'+esc(x.h)+'</p><ul class="items">'; lastH=x.h; } h+=itemHtml(x); });
+  h+='</ul>';
+  if(!show.length) h+='<p class="lede">Nothing open here.</p>';
+  if(ui.openOnly&&!searching&&done) h+='<p><button type="button" class="link" id="rv-'+gkey+k+'" data-reveal="'+gkey+k+'">'+done+' '+word+', '+(reveal[gkey+k]?'hide them':'show them')+'</button></p>';
+  return h;
+}
+function cardHtml(g,items,searching){
+  if(g.plain) return searching?"":'<section class="card" id="g-'+g.key+'"><h2>'+esc(g.name)+'</h2><p>'+esc(g.plain)+'</p></section>';
+  if(searching&&!items.length) return "";
+  var c=counts(g);
+  var h='<section class="card" id="g-'+g.key+'"><div class="chead"><div><h2>'+esc(g.name)+'</h2>'
+   +(g.lead?'<p style="margin-top:2px"><span class="mono">Lead</span> <b>'+esc(g.lead)+'</b></p>':'')+'</div>'
+   +'<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="mono">'+c.done+' of '+c.act+' done or decided</span><button type="button" id="cp-'+g.key+'" data-copy="'+g.key+'">Copy link to this list</button></div></div>'
+   +'<p class="lede">'+esc(g.meta)+'</p><p class="mono">'+c.T+' tasks · '+c.D+' decisions · '+c.N+' notes'+(searching?' · showing '+items.length+' matching':'')+'</p>';
+  h+=listByKind(items,"T",g.key,searching)+listByKind(items,"D",g.key,searching);
+  var notes=items.filter(function(x){return x.k==="N";});
+  if(notes.length) h+='<details class="notes"'+(searching?' open':'')+'><summary class="mono">Notes ('+notes.length+')</summary><ul class="items">'+notes.map(itemHtml).join("")+'</ul></details>';
+  return h+'</section>';
+}
+function cardsHtml(){
+  var h="";
+  if(flash) h+='<p class="notice" role="status">'+esc(flash)+'</p>';
+  if(q){
+    var hit=search(q), by={}; hit.forEach(function(x){(by[x.g]=by[x.g]||[]).push(x);});
+    h+='<p class="mono" role="status">'+hit.length+' items match "'+esc(q)+'" across all groups</p>';
+    GROUPS.forEach(function(g){ if(by[g.key]) h+=cardHtml(g,by[g.key],true); });
+    if(!hit.length) h+='<p class="lede">No item matches. Try a shorter word.</p>';
+  } else h+=cardHtml(BYG[ui.group],BYG[ui.group].items,false);
+  return h;
+}
+function noteHtml(){
+  if(!loaded) return '<p class="notice" role="status">'+esc(loadNote)+'</p>';
+  if(!writable()) return '<p class="notice" role="status">'+esc(window.CURLEW_RO_NOTE||"Read-only: you can see what is ticked and decided, but not change it. Ask Christa Schneider for contributor access to this page.")+'</p>';
+  return "";
+}
+function timelineHtml(){
+  var now=new Date(), m=(now.getFullYear()-2026)*12+(now.getMonth()-11)+(now.getDate()-1)/31;
+  var pc=function(x){return (x/20*100).toFixed(2)+"%";};
+  var h='<div class="tl"><div class="tlr" style="border-top:0;min-height:0"><div></div><div><div class="yrs"><span style="left:0">\u201926</span><span style="left:'+pc(1)+'">2027</span><span style="left:'+pc(13)+'">2028</span></div><div class="axis">'+MONTHS.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div></div></div>';
+  TL.forEach(function(r){
+    h+='<div class="tlr"><div class="l">'+esc(r.l)+'<small>'+esc(r.n)+'</small></div><div class="trk">';
+    if(m>=0&&m<=20) h+='<span class="now" style="left:'+pc(m)+'"></span>';
+    if(r.p!=null) h+='<span class="gp'+(r.dl?' dlm':'')+(r.p===0?' edge':'')+'" style="left:'+pc(r.p)+'"></span><span class="gn'+(r.dl?' red':'')+'" style="left:calc('+pc(r.p)+' + 10px)">'+esc(r.n)+'</span>';
+    else if(r.s!=null){ h+='<span class="gb" style="left:'+pc(r.s)+';width:'+pc(r.e-r.s)+'"></span>';
+      if(r.e-r.s>8) h+='<span class="gn in" style="left:calc('+pc(r.s)+' + 4px)">'+esc(r.n)+'</span>';
+      else if(r.e>12) h+='<span class="gn" style="right:calc('+pc(20-r.s)+' + 4px)">'+esc(r.n)+'</span>';
+      else h+='<span class="gn" style="left:calc('+pc(r.e)+' + 4px)">'+esc(r.n)+'</span>'; }
+    else h+='<span class="gn" style="left:4px">'+esc(r.n)+'</span>';
+    h+='</div></div>';
+  });
+  return h+'</div><p class="mono">Grey bars: periods · black diamonds: milestones · red: the 30 November deadline'+(m<0?' · today is before the start of this chart':' · black line: today')+'</p>';
+}
+function saidHtml(){
+  var h='<section class="block"><h2>Names and initials</h2><table class="key">'+PEOPLE.map(function(p){return "<tr><td><b>"+esc(p[0])+"</b></td><td>"+esc(p[1])+"</td><td>"+esc(p[2])+"</td></tr>";}).join("")+'</table><p class="mono">Also mentioned: Gary Thoms, Devyani Sharma, Yves Scherrer, Simon Roper</p></section>';
+  SAID.forEach(function(n){
+    h+='<section class="block said"><h2>'+esc(n.name)+'</h2><p class="mono">'+esc(n.when)+'</p><div class="cols">';
+    var blocks=n.blocks.slice(), g=n.plan&&BYG[n.plan];
+    if(g){ if(n.plan!=="all") blocks.unshift({h:"Context",items:[g.meta]}); g.sections.forEach(function(s){blocks.push({h:s.h,items:s.items.map(function(it){return typeof it==="string"?it.slice(2):it.t;})});}); }
+    blocks.forEach(function(b){h+='<div>'+(b.h?'<h3>'+esc(b.h)+'</h3>':'')+'<ul>'+b.items.map(function(i){return "<li>"+fmt(i)+"</li>";}).join("")+'</ul></div>';});
+    h+='</div></section>';
+  });
+  return h;
+}
+
+/* ---------- shell ---------- */
+function view(){var h=(location.hash||"").replace("#","");return h==="said"?"said":"do";}
+function shell(){
+  $("app").innerHTML='<header id="head"></header>'
+   +'<nav class="tabs" aria-label="Views"><a class="btn" id="tab-do" href="#do">What to do</a><a class="btn" id="tab-said" href="#said">What was said</a></nav>'
+   +'<main id="v-do" style="display:flex;flex-direction:column;gap:28px">'
+   +'<div class="top2"><section class="block"><p class="mono">Hard deadline for all variables · Monday, 30 November 2026, 23:59 Bern time</p><div class="count" id="count" role="timer"></div></section><section class="block"><p class="mono">Completion, items due by the end of November</p><div id="overall" style="display:flex;flex-direction:column;gap:8px"></div></section></div>'
+   +'<section class="block"><h2>Next three weeks</h2><div class="meet" id="meet"></div><div id="strip" style="display:flex;flex-direction:column;gap:8px"></div></section>'
+   +'<section class="block"><h2>Pick your group</h2><p class="lede">Each button opens that group’s list. Your choice is remembered on this device, and every list has its own link to send round.</p><nav class="picker" id="picker" aria-label="Groups"></nav></section>'
+   +'<section class="block"><h2>Progress by group</h2><p class="lede">Tasks done and decisions decided, sorted by due date. Notes are not counted; Localities is not tracked here.</p><div id="progress"></div></section>'
+   +'<section class="block"><h2>Lists</h2><div style="max-width:420px"><label class="mono" for="myname">Your name (shown next to your changes; remembered on this device)</label><input type="text" id="myname" maxlength="60" autocomplete="name" placeholder="First name and surname"></div><div class="tools"><div><label class="mono" for="q">Search all items in all groups</label><input type="search" id="q" placeholder="e.g. football" autocomplete="off"></div>'
+   +'<label class="switch" for="openonly"><input type="checkbox" id="openonly" role="switch"'+(ui.openOnly?' checked':'')+'><span class="mono">Show open items only</span></label></div><div id="note"></div></section>'
+   +'<div id="cards" style="display:flex;flex-direction:column;gap:28px"></div>'
+   +'<section class="block"><h2>Change log</h2><p class="lede">Who changed what and when, newest first. Entries are kept even when a tick is undone or a decision is reopened.</p><div id="log"></div></section>'
+   +'<section class="block"><h2>The long run, December 2026 to July 2028</h2><div id="timeline"></div></section>'
+   +'</main><main id="v-said" class="hidden" style="display:flex;flex-direction:column;gap:28px"><p class="lede">The complete record of the meeting notes of 5 and 6 November, sorted by topic. What has to be done is under "What to do".</p><div id="said" style="display:flex;flex-direction:column;gap:28px"></div></main>'
+   +'<footer class="mono"><span>CURLEW</span><span>Source: team notes, York, 5 and 6 November 2026 · Questions: Christa Schneider</span></footer>';
+  $("timeline").innerHTML=timelineHtml();
+  $("said").innerHTML=saidHtml();
+}
+function keepFocus(fn){
+  var a=document.activeElement, id=a&&a.id, pos=(a&&a.tagName==="INPUT"&&a.type==="text")?a.selectionStart:null;
+  fn();
+  if(editing){var inp=$("ans-"+editing); if(inp){inp.value=draft;}}
+  if(id){var el=$(id); if(el&&el!==document.activeElement){try{el.focus({preventScroll:true}); if(pos!=null) el.setSelectionRange(pos,pos);}catch(e){}}}
+  names();
+}
+function renderDyn(){
+  keepFocus(function(){
+    var v=view();
+    $("v-do").classList.toggle("hidden",v!=="do"); $("v-said").classList.toggle("hidden",v!=="said");
+    $("tab-do").classList.toggle("on",v==="do"); $("tab-said").classList.toggle("on",v==="said");
+    $("head").innerHTML=headHtml(); $("meet").innerHTML=meetHtml(); $("strip").innerHTML=stripHtml();
+    $("overall").innerHTML=overallHtml(); $("picker").innerHTML=pickerHtml(); $("progress").innerHTML=progressHtml(); $("note").innerHTML=noteHtml(); $("cards").innerHTML=cardsHtml(); $("log").innerHTML=logHtml();
+  });
+}
+function names(){
+  if(!user||!user.profiles) return;
+  var els=document.querySelectorAll("[data-uid]"), ids=[]; els.forEach(function(e){var i=e.getAttribute("data-uid"); if(i&&ids.indexOf(i)<0) ids.push(i);});
+  if(!ids.length) return;
+  user.profiles(ids).then(function(ps){els.forEach(function(e){var p=ps[e.getAttribute("data-uid")]; e.textContent=(p&&p.name)||"someone";});});
+}
+function fail(err,id){
+  var code=err&&err.code;
+  if(code==="invalid_argument"||code==="not_granted"||code==="revoked"){canWrite=false; flash="";}
+  else flash="That could not be saved. Please try again in a moment.";
+  if(id) delete busy[id]; renderDyn();
+}
+function write(id,body){
+  if(!writable()||busy[id]) return; busy[id]=1; flash="";
+  var ref=db.doc("marks/"+id), p=body?ref.set(body):ref["delete"](), old=marks[id], x=BYID[id];
+  if(body) marks[id]=body; else delete marks[id];
+  renderDyn();
+  p.then(function(){delete busy[id];
+    var e={id:id, act: body?body.s:((x&&x.k==="D")?"reopened":"undone")}; if(body&&body.answer) e.answer=body.answer; if(!body&&old&&old.answer) e.prev=old.answer; logAdd(e);
+  },function(e){fail(e,id);});
+}
+function stamp(o){o.by=uid||""; o.name=(ui.name||"").trim().slice(0,60); o.at=new Date().toISOString(); return o;}
+function needName(){ if((ui.name||"").trim()) return false; flash="Please enter your name first, in the field \"Your name\" above the lists. It is shown next to your changes."; renderDyn(); var n=$("myname"); if(n){ n.focus(); if(n.scrollIntoView) n.scrollIntoView({block:"center"}); } return true; }
+
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.id==="openonly"){ui.openOnly=t.checked; reveal={}; saveUi(); renderDyn(); return;}
+  var id=t.getAttribute&&t.getAttribute("data-tick"); if(!id) return;
+  if(needName()) return;
+  write(id, t.checked?stamp({s:"done"}):null);
+});
+document.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.id==="q"){q=t.value.trim(); renderDyn(); return;}
+  if(t.id==="mt-date"){meetDraft=t.value; return;}
+  if(t.id==="myname"){ui.name=t.value.slice(0,60); saveUi(); if(flash&&ui.name.trim()){flash=""; renderDyn();} return;}
+  if(t.id&&t.id.indexOf("ans-")===0) draft=t.value;
+});
+document.addEventListener("submit",function(e){
+  var f=e.target, id=f.getAttribute&&f.getAttribute("data-form"); if(!id) return; e.preventDefault();
+  var v=draft.trim(); if(!v){ var i=$("ans-"+id); if(i) i.focus(); return; }
+  if(needName()) return;
+  editing=null; draft=""; write(id, stamp({s:"decided", answer:v.slice(0,300)}));
+});
+document.addEventListener("click",function(e){
+  var t=e.target.closest&&e.target.closest("button"); if(!t) return;
+  var a;
+  if((a=t.getAttribute("data-undo"))){ if(needName()) return; write(a,null); }
+  else if((a=t.getAttribute("data-decide"))){ editing=a; draft=""; renderDyn(); var i=$("ans-"+a); if(i) i.focus(); }
+  else if(t.hasAttribute("data-cancel")){ var was=editing; editing=null; draft=""; renderDyn(); var b=$("md-"+was); if(b) b.focus(); }
+  else if((a=t.getAttribute("data-reveal"))){ reveal[a]=!reveal[a]; renderDyn(); }
+  else if(t.hasAttribute("data-logall")){ logAll=!logAll; renderDyn(); }
+  else if(t.hasAttribute("data-logstart")||t.hasAttribute("data-logstop")){ if(!db||!isOwner) return; var on=t.hasAttribute("data-logstart"); logStart=on?new Date().toISOString():""; renderDyn();
+    var lr=db.doc("settings/log"); (on?lr.set({start:logStart}):lr["delete"]()).then(null,function(er){fail(er);}); }
+  else if(t.hasAttribute("data-meet")||t.hasAttribute("data-meetset")){ if(!writable()||needName()) return; var mi=$("mt-date"); var dte=t.hasAttribute("data-meetset")?((mi&&mi.value)||meetDraft):t.getAttribute("data-meet"); if(t.hasAttribute("data-meetset")&&!/^\d{4}-\d{2}-\d{2}$/.test(dte)){ if(mi) mi.focus(); return; } meetDraft=""; meeting=dte?stamp({date:dte}):null; renderDyn();
+    var ref=db.doc("settings/meeting"); (dte?ref.set(meeting):ref["delete"]()).then(function(){ var e={id:"meeting", act:dte?"meeting-set":"meeting-cleared"}; if(dte) e.date=dte; logAdd(e); },function(er){fail(er);}); }
+  else if((a=t.getAttribute("data-copy"))){ var url=ART_URL+"#g-"+a;
+    var ok=function(){flash="Link copied: "+url; renderDyn();}, no=function(){flash="Copy this link: "+url; renderDyn();};
+    try{ navigator.clipboard.writeText(url).then(ok,no); }catch(er){ no(); } }
+});
+function route(){
+  var h=(location.hash||"").replace("#","");
+  if(h.indexOf("g-")===0&&BYG[h.slice(2)]){ ui.group=h.slice(2); saveUi(); if(q){ q=""; $("q").value=""; } }
+  renderDyn();
+}
+window.addEventListener("hashchange",function(){ var h=(location.hash||"").replace("#",""); route(); if(h.indexOf("g-")===0){var c=$("g-"+ui.group); if(c&&c.scrollIntoView) c.scrollIntoView({block:"start"});} else window.scrollTo(0,0); });
+setInterval(function(){ $("head").innerHTML=headHtml(); },60000);
+setInterval(function(){ var c=$("count"); if(c) c.innerHTML=countHtml(); },1000);
+
+shell(); $("myname").value=ui.name; $("count").innerHTML=countHtml(); route();
+
+/* ---------- shared data ---------- */
+var use=(window.claude&&window.claude.use)?function(n){return window.claude.use(n);}:function(){return Promise.resolve(null);};
+var slow=setTimeout(function(){ if(!loaded){ loadNote="The shared ticks can’t be reached yet. The lists below show everything as open."; renderDyn(); } },10000);
+use("user").then(function(u){
+  user=u||null; if(!user) return null;
+  return Promise.all([user.id(), user.can("data.write"), user.isOwner(), user.me()]).then(function(r){ uid=r[0]; isOwner=!!r[2];
+    if(!ui.name&&r[3]&&r[3].name){ ui.name=String(r[3].name).slice(0,60); var nf=$("myname"); if(nf&&!nf.value) nf.value=ui.name; } if(r[1]===false) canWrite=false; else if(r[1]===true) canWrite=true; });
+}).then(function(){ return use("db"); }).then(function(d){
+  db=d||null;
+  if(!db){ clearTimeout(slow); loaded=true; renderDyn(); return; }
+  db.collection("marks").onSnapshot(function(snap){
+    var m={}; snap.docs.forEach(function(doc){ var b=doc.data(); if(b&&b.s) m[doc.id]=b; });
+    Object.keys(busy).forEach(function(id){ if(marks[id]) m[id]=marks[id]; else delete m[id]; });
+    marks=m; if(!snap.metadata||!snap.metadata.fromCache||!loaded){ clearTimeout(slow); loaded=true; }
+    renderDyn();
+  },function(){ clearTimeout(slow); loaded=true; db=null; renderDyn(); });
+  db.collection("log").orderBy("at","desc").limit(300).onSnapshot(function(snap){ logs=snap.docs.map(function(d){return d.data();}).filter(function(b){return b&&b.act&&b.at;}); renderDyn(); },function(){});
+  db.doc("settings/log").onSnapshot(function(sn){ var b=sn.exists?sn.data():null; logStart=(b&&typeof b.start==="string")?b.start:""; renderDyn(); },function(){});
+  db.doc("settings/meeting").onSnapshot(function(s){ var b=s.exists?s.data():null; meeting=(b&&b.date)?b:null; renderDyn(); },function(){});
+},function(){ clearTimeout(slow); loaded=true; renderDyn(); });
+})();
+</script>
+</body>
+</html>
