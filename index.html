@@ -203,7 +203,7 @@ input[type=date]{font:400 14px var(--body);min-height:32px;padding:2px 8px;borde
   window.CURLEW_RO_NOTE = "Read-only: the shared ticks are not connected yet. Please tell Christa Schneider.";
   var state = null, subs = [], timer = null;
   function fire(){ subs.forEach(function(f){ try{ f(); }catch(e){} }); }
-  function take(r){ if(r && r.ok){ state = r; fire(); return r; } throw {code:"unavailable", message:(r&&r.error)||"no answer"}; }
+  function take(r){ if(r && r.ok){ state = r; try{ localStorage.setItem("curlew-york-state", JSON.stringify(r)); }catch(e){} fire(); return r; } throw {code:"unavailable", message:(r&&r.error)||"no answer"}; }
   function load(){ if(!live) return Promise.resolve(); return fetch(API,{redirect:"follow"}).then(function(r){return r.json();}).then(take).catch(function(){}); }
   function post(o){ if(!live) return Promise.reject({code:"invalid_argument"});
     if(window.curlewLabel && o.id) o.label = window.curlewLabel(o.id);
@@ -231,6 +231,8 @@ input[type=date]{font:400 14px var(--body);min-height:32px;padding:2px 8px;borde
   var user = { id:function(){return Promise.resolve(null);}, can:function(){return Promise.resolve(live);}, isOwner:function(){return Promise.resolve(false);},
     me:function(){return Promise.resolve({name:""});}, profiles:function(ids){var r={};[].concat(ids).forEach(function(i){r[i]={name:""};});return Promise.resolve(r);} };
   window.claude = { use:function(n){ return Promise.resolve(n==="db" ? (live?db:null) : n==="user" ? user : null); } };
+  /* show the last known state at once; the sheet can take a few seconds to answer */
+  try{ var c=JSON.parse(localStorage.getItem("curlew-york-state")||"null"); if(live && c && c.ok && c.marks) state=c; }catch(e){}
   load();
   timer = setInterval(function(){ if(!document.hidden) load(); }, 30000);
   document.addEventListener("visibilitychange", function(){ if(!document.hidden) load(); });
@@ -1046,7 +1048,7 @@ render();
 
 /* ---------- shared data ---------- */
 var use=(window.claude&&window.claude.use)?function(n){return window.claude.use(n);}:function(){return Promise.resolve(null);};
-var slow=setTimeout(function(){ if(!loaded){ loadNote="The shared ticks can’t be reached yet. Everything is shown as open for now."; render(); } },10000);
+var slow=setTimeout(function(){ if(!loaded){ loadNote="Still loading the shared ticks; this can take a few seconds. Until then everything is shown as open."; render(); } },10000);
 use("user").then(function(u){
   user=u||null; if(!user) return null;
   return Promise.all([user.id(), user.can("data.write"), user.me()]).then(function(r){ uid=r[0]; if(r[1]===false) canWrite=false; else if(r[1]===true) canWrite=true;
