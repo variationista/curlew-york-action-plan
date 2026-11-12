@@ -513,7 +513,39 @@ var GROUPS = [
     "N|Asking about childhood and the local area gives access to local features; 'What do you do in your free time? Can you tell me more about that?' lets the speaker become the expert"
   ]}
  ]},
-{key:"geo", icon:"pin", name:"Localities", plain:"Dave Britain and the geosampling group are working on the locality selection and will report back to the team.", sections:[]},
+{key:"geo", icon:"pin", name:"Localities", sort:"2026-11-30d", own:"geosampling group", due:"end of Nov", d:DL,
+ lead:"Dave Britain and the geosampling group", meta:"Adrian Leemann presented the draft: 141 clusters (100 England, 25 cities, 16 Wales). Four decisions are needed so that advertising for recruitment can start, and the clustering has to be decided before recruitment is rolled out.",
+ sections:[
+  {h:"Next step", items:[
+    {k:"T", t:"Dave Britain contacts Jess Freathy and Josh Coombs to work on localities", who:"Dave Britain", due:"no date", d:""}
+  ]},
+  {h:"The four decisions", items:[
+    "D|1 Weighting :: 787 variables from Yves Scherrer's digitised SED (farming etc. removed); unbalanced across types but weighted a third each. Weight by the share of each variable group? Lexis is over-represented at present.",
+    "D|2 Adjacent or discontinuous clusters?",
+    "D|3 Which of the 4 candidates per cluster :: most typical, geographical middle, most stable, or largest town (easiest to recruit). Devise a consistent plan.",
+    "D|4 Cities :: city plus commuters or city only; record in both the city and its allocated locality, or let the city represent the locality?"
+  ]},
+  {h:"Also to decide", items:[
+    "D|Ethnic minority subsamples :: only a young sample is planned; Devyani Sharma stressed a middle-class sample and an older group for Caribbean communities",
+    "D|What is the census after :: what English looks like in each place, or for people who have only ever spoken English? Language competence; centralise English in recruitment?"
+  ]},
+  {h:"To weigh up for these decisions", items:[
+    "N|125 regions, some representing a city alone (more cities, more granularity); ONS built-up areas could help (DB)",
+    "N|Or the biggest urban centre in each region; not always a large one, e.g. the south-west (DB)",
+    "N|Urban and rural balance (PF, DW) :: resolved by the specific locality selection, or back to the original 60 to 60 split (DB)",
+    "N|SED sampling effect :: more sampling in the south and south-west gives those regions more weight in the clustering (DB)",
+    "N|SED localities are all very rural :: does this complicate choosing urban places within a cluster, e.g. Warrington?",
+    "N|Administrative shifts since the 1950s :: e.g. Middlesbrough is no longer in the same county (JW)",
+    "N|Net migration per region? (LB) :: statistics exist at different levels of detail (DB)",
+    "N|Geosocial leanings :: do smaller places in the north-west lean towards Liverpool or Manchester? (JW)",
+    "N|One blanket plan or an informed approach per cluster? (PF)",
+    "N|Wales, 14 localities + 2 cities :: SAWD is hard to access, the SED method gives no effective clusters; current clustering uses Travel to Work Areas; merge the smallest areas with the smallest neighbour (DW). Apply TTWA in England too? (DB)",
+    "N|Cities with high diversity :: how to reach multi-ethnic community norms (RSH); certain areas of certain cities (JW); subsamples supplement city sampling (DW)",
+    "N|Ethnicity :: not controlling for it risks a non-systematic sample (DB); a network approach could control for input (JW); a non-deterministic approach is needed (LB)",
+    "N|Staggered roll-out from south to north? (JW) :: more variation is expected in the north (PF)",
+    "N|Access and logistics, the team's own networks (EC) :: a secondary concern (DB)"
+  ]}
+ ]},
 {key:"media", icon:"horn", name:"Media", sort:"2026-12", own:"Salina Cuddy", due:"no date",
  lead:"Salina Cuddy", meta:"Social media runs from December 2026 through the whole data collection; the big interactive posts come once recruitment can be pushed.",
  sections:[
@@ -860,7 +892,7 @@ function meetHtml(){
 function tileHtml(g){
   if(g.plain) return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">with Dave Britain’s group</span></a>';
   var c=counts(g), pct=c.act?c.done/c.act*100:0;
-  var dueTxt={all:"by 30 Nov",morph:"by 30 Nov",lexis:"by 30 Nov",vowels:"by 30 Nov",cons:"by 30 Nov",admin:"by end of Nov",media:"from Dec 2026",app:"from end of Jan 2027",pi:"no date"}[g.key];
+  var dueTxt={all:"by 30 Nov",morph:"by 30 Nov",lexis:"by 30 Nov",vowels:"by 30 Nov",cons:"by 30 Nov",admin:"by end of Nov",geo:"by end of Nov",media:"from Dec 2026",app:"from end of Jan 2027",pi:"no date"}[g.key];
   return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">'+c.done+' of '+c.act+' done · '+esc(dueTxt)+'</span><span class="pb"><i style="width:'+pct.toFixed(1)+'%"></i></span></a>';
 }
 function nameHtml(){
