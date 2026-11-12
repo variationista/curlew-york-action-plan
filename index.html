@@ -190,6 +190,11 @@ footer{border-top:1px solid var(--rule);font-size:13px}
 li.note{font-size:14px;color:var(--sec)}
 input[type=date]{font:400 14px var(--body);min-height:32px;padding:2px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
 .said h3{margin-top:10px}
+
+.count{gap:22px}
+.count b{font:600 26px/1.1 var(--display);color:var(--ink)}
+.count span{font-size:11.5px;letter-spacing:.06em}
+.big{font:600 26px/1.1 var(--display)}
 </style>
 </head>
 <body>
@@ -255,8 +260,8 @@ var GROUPS = [
  lead:"", meta:"Applies to every team member. Advisory associates are welcome to read along but have no tasks.",
  sections:[
   {h:"To do", items:[
-    {k:"T", t:"Vote in Jess Freathy's poll on Discord for the date of the final variable meeting (the poll closes on Thursday 12 November)", due:"12 Nov", d:"2026-11-12", soft:1},
-    {k:"T", t:"Attend the online final variable meeting", due:"date open, see the front page", d:DL},
+    {k:"T", gone:1, t:"Vote in Jess Freathy's poll on Discord for the date of the final variable meeting"},
+    {k:"T", t:"Attend the online final variable meeting on Wednesday 25 November, 10:00 to 12:00 Swiss time (09:00 to 11:00 UK time)", due:"25 Nov", d:"2026-11-25"},
     {k:"T", t:"Have all variables and prompts of your group final", due:"30 Nov 2026", d:DL},
     {k:"T", t:"Give your feedback in the consultation on the metadata questionnaire: rate the topics, pick collection methods, add recommendations", url:CONSULT, link:"Open the consultation"},
     {k:"T", t:"Early-career researchers only: fill in the Doodle for the February meeting in Bern once Christa sends it. This meeting is not for the whole team; there is no May meeting.", who:"early-career researchers"},
@@ -342,7 +347,7 @@ var GROUPS = [
     "D|BATH :: 'master' is in the lexis group"
   ]}
  ]},
-{key:"cons", glyph:"ʃ", name:"Consonants and suprasegmentals", sort:"2026-11-30b", own:"consonants group", due:"30 Nov 2026", d:DL,
+{key:"cons", glyph:"ʃ", name:"Consonants and suprasegmentals", notesAbout:"limits of smartphone microphones", sort:"2026-11-30b", own:"consonants group", due:"30 Nov 2026", d:DL,
  lead:"to be confirmed", meta:"Agreed next step: define some spare items and check the prompts carefully.",
  sections:[
   {h:"To do", items:[
@@ -401,7 +406,7 @@ var GROUPS = [
     "N|Limits of smartphone microphones :: e.g. spectral tilt"
   ]}
  ]},
-{key:"morph", glyph:"-ed", name:"Morphosyntax", sort:"2026-11-22a", own:"morphosyntax group", due:"30 Nov 2026", d:DL,
+{key:"morph", glyph:"-ed", name:"Morphosyntax", notesAbout:"things to keep in mind for the elicitation", sort:"2026-11-22a", own:"morphosyntax group", due:"30 Nov 2026", d:DL,
  lead:"Oddur Snorrason with David Willis", meta:"Trickier than phonetics because of app logistics and later data processing. Block led by Oddur Snorrason; notes: Alina Waitzmann.",
  sections:[
   {h:"To do", items:[
@@ -455,7 +460,7 @@ var GROUPS = [
     "T|44 :: different dogs; 'whose bone is it?'"
   ]}
  ]},
-{key:"lexis", glyph:"Aa", name:"Lexis and discourse", sort:"2026-11-22b", own:"lexis and discourse group", due:"30 Nov 2026", d:DL,
+{key:"lexis", glyph:"Aa", name:"Lexis and discourse", notesAbout:"Americanisms; asking about childhood and the local area", sort:"2026-11-22b", own:"lexis and discourse group", due:"30 Nov 2026", d:DL,
  lead:"Jess Freathy with Dave Britain", meta:"Discourse-pragmatic prompts and variables are defined and decided together with morphosyntax. Fifteen items were already ticked at the meeting and are shown as done.",
  sections:[
   {h:"To do", items:[
@@ -513,23 +518,11 @@ var GROUPS = [
     "N|Asking about childhood and the local area gives access to local features; 'What do you do in your free time? Can you tell me more about that?' lets the speaker become the expert"
   ]}
  ]},
-{key:"geo", icon:"pin", name:"Localities", sort:"2026-11-30d", own:"geosampling group", due:"end of Nov", d:DL,
- lead:"Dave Britain and the geosampling group", meta:"Adrian Leemann presented the draft: 141 clusters (100 England, 25 cities, 16 Wales). Four decisions are needed so that advertising for recruitment can start, and the clustering has to be decided before recruitment is rolled out.",
+{key:"geo", icon:"pin", name:"Localities", sort:"2026-11-30d", own:"geosampling group", due:"no date",
+ lead:"Dave Britain and the geosampling group", meta:"Dave Britain and the geosampling group are working on the locality selection and will report back to the team. There is nothing to tick here; the notes below are the points raised in York.",
+ notesAbout:"points raised in York to weigh up for the locality selection",
  sections:[
-  {h:"Next step", items:[
-    {k:"T", t:"Dave Britain contacts Jess Freathy and Josh Coombs to work on localities", who:"Dave Britain", due:"no date", d:""}
-  ]},
-  {h:"The four decisions", items:[
-    "D|1 Weighting :: 787 variables from Yves Scherrer's digitised SED (farming etc. removed); unbalanced across types but weighted a third each. Weight by the share of each variable group? Lexis is over-represented at present.",
-    "D|2 Adjacent or discontinuous clusters?",
-    "D|3 Which of the 4 candidates per cluster :: most typical, geographical middle, most stable, or largest town (easiest to recruit). Devise a consistent plan.",
-    "D|4 Cities :: city plus commuters or city only; record in both the city and its allocated locality, or let the city represent the locality?"
-  ]},
-  {h:"Also to decide", items:[
-    "D|Ethnic minority subsamples :: only a young sample is planned; Devyani Sharma stressed a middle-class sample and an older group for Caribbean communities",
-    "D|What is the census after :: what English looks like in each place, or for people who have only ever spoken English? Language competence; centralise English in recruitment?"
-  ]},
-  {h:"To weigh up for these decisions", items:[
+  {h:"Points raised in York", items:[
     "N|125 regions, some representing a city alone (more cities, more granularity); ONS built-up areas could help (DB)",
     "N|Or the biggest urban centre in each region; not always a large one, e.g. the south-west (DB)",
     "N|Urban and rural balance (PF, DW) :: resolved by the specific locality selection, or back to the original 60 to 60 split (DB)",
@@ -546,7 +539,7 @@ var GROUPS = [
     "N|Access and logistics, the team's own networks (EC) :: a secondary concern (DB)"
   ]}
  ]},
-{key:"media", icon:"horn", name:"Media", sort:"2026-12", own:"Salina Cuddy", due:"no date",
+{key:"media", icon:"horn", name:"Media", notesAbout:"content ideas for posts", sort:"2026-12", own:"Salina Cuddy", due:"no date",
  lead:"Salina Cuddy", meta:"Social media runs from December 2026 through the whole data collection; the big interactive posts come once recruitment can be pushed.",
  sections:[
   {h:"To do", items:[
@@ -574,7 +567,7 @@ var GROUPS = [
     "N|Content ideas :: scone and roll, jacket potato, 'what do you say that others don't?', strange SED words to guess, Christmas"
   ]}
  ]},
-{key:"admin", icon:"board", name:"Administration", sort:"2026-11-30c", own:"Christa Schneider", due:"no date",
+{key:"admin", icon:"board", name:"Administration", notesAbout:"household composition and social networks", sort:"2026-11-30c", own:"Christa Schneider", due:"no date",
  lead:"Christa Schneider", meta:"Project organisation, consent form and metadata questionnaire.",
  sections:[
   {h:"To do", items:[
@@ -596,7 +589,7 @@ var GROUPS = [
     "D|Short, simple questions in the questionnaire or in the interview; order of presentation"
   ]}
  ]},
-{key:"app", icon:"phone", name:"App and data collection", sort:"2027-01", own:"owner open", due:"no date",
+{key:"app", icon:"phone", name:"App and data collection", notesAbout:"Whisper transcripts need a human check", sort:"2027-01", own:"owner open", due:"no date",
  lead:"Adrian Leemann and Daniel Wanitsch", meta:"Daniel Wanitsch develops the app with his company. The app depends on the variables being final on 30 November. The data sits in Bern: a NAS has been set up and people will get access soon.",
  sections:[
   {h:"To do", items:[
@@ -624,7 +617,7 @@ var GROUPS = [
     "D|Should the questionnaire come after the recording, or earlier? (timing still open)"
   ]}
  ]},
-{key:"pi", icon:"flag", name:"PIs", sort:"9999", own:"PIs, with Christa Schneider", due:"no date",
+{key:"pi", icon:"flag", name:"PIs", notesAbout:"age ranges of the speakers", sort:"9999", own:"PIs, with Christa Schneider", due:"no date",
  lead:"Adrian Leemann, Dave Britain, Paul Foulkes, David Willis", meta:"Ethics and data sharing sit with the PIs and can be resolved together with Christa Schneider.",
  sections:[
   {h:"Ethics and data sharing", items:[
@@ -792,7 +785,7 @@ var SAID = [
   "Dave Britain contacts Jess Freathy and Josh Coombs to work on localities",
   "Consent form done by the end of November; metadata questionnaire ready by late November",
   "Online meeting in the third week of November (not 18th to 20th)",
-  "Update of 11 November: the Discord poll for this meeting offers dates between 19 and 26 November, so the date is open again"]}
+  "Update of 12 November: the final variable meeting is fixed for Wednesday 25 November 2026, 10:00 to 12:00 Swiss time (09:00 to 11:00 UK time), online"]}
 ]}
 ];
 
@@ -814,6 +807,7 @@ GROUPS.forEach(function(g){
   BYG[g.key] = g; g.items = [];
   g.sections.forEach(function(s,si){ s.items.forEach(function(it,ii){
     var o = typeof it==="string" ? {k:it.charAt(0), t:it.slice(2)} : it;
+    if(o.gone) return;
     var x = {id:g.key+"-"+si+"-"+ii, g:g.key, h:s.h, k:o.k, t:o.t, pre:!!o.pre, url:o.url||"", link:o.link||"",
       who:o.who||g.own, due:o.due||g.due, d:(o.d!==undefined?o.d:(o.due?"":g.d||"")), soft:!!o.soft};
     x.hay = (x.t+" "+x.who+" "+s.h+" "+g.name).toLowerCase();
@@ -871,7 +865,7 @@ function isNov(x){ if(x.k==="N") return false; var vg={vowels:1,cons:1,morph:1,l
 function countHtml(){
   var ms=DEADLINE-Date.now(); if(ms<=0) return '<div><b>0</b><span>deadline passed</span></div>';
   var sec=Math.floor(ms/1000),d=Math.floor(sec/86400),hh=Math.floor(sec%86400/3600),mm=Math.floor(sec%3600/60),ss=sec%60;
-  return '<div><b>'+d+'</b><span>days</span></div><div><b>'+hh+'</b><span>hours</span></div><div><b>'+mm+'</b><span>min</span></div><div><b>'+ss+'</b><span>sec</span></div>';
+  return '<div><b>'+d+'</b><span>days</span></div><div><b>'+hh+'</b><span>hours</span></div><div><b>'+mm+'</b><span>min</span></div>';
 }
 function overallHtml(){
   var t=0,d=0; ITEMS.forEach(function(x){ if(isNov(x)){t++; if(isDone(x)) d++;} });
@@ -879,19 +873,12 @@ function overallHtml(){
   return '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span class="big">'+pct+'%</span><span class="mono">'+d+' of '+t+' tasks and decisions done</span></div><div class="obar" role="img" aria-label="'+pct+' percent complete"><i style="width:'+pct+'%"></i></div><p class="mono">Counts what is due by 30 November. Later items are not counted; they show their own due date.</p>';
 }
 function meetHtml(){
-  var today=ymd(new Date()), h;
-  if(meeting&&meeting.date){
-    h='<p><b>Next meeting: final variable meeting, online.</b></p><p><span class="lab">Date</span> <b>'+esc(WDL[pd(meeting.date).getDay()]+" "+niceLong(meeting.date))+'</b> <span class="mono">set by '+whoM(meeting)+(meeting.at?', '+esc(nice(isoLocalDay(meeting.at))):'')+'</span></p>';
-    if(writable()) h+='<div class="acts"><button type="button" id="mt-clear" data-meet="">Change: no date yet</button></div>';
-  } else {
-    h='<p><b>Next meeting: final variable meeting, online.</b> The date is not fixed yet. '+(today>"2026-11-12"?'Jess Freathy’s poll on Discord has closed; the date will appear here as soon as it is announced.':'Jess Freathy’s poll on Discord offers dates between 19 and 26 November and closes on Thursday 12 November.')+'</p>';
-    if(writable()) h+='<div class="acts"><label class="mono" for="mt-date">Date known? Set it:</label><input type="date" id="mt-date" min="2026-11-12" max="2026-11-30" value="'+esc(meetDraft)+'"><button type="button" id="mt-set" data-meetset="1">Set date</button></div>';
-  }
-  return h;
+  return '<p><b>Next meeting: final variable meeting, online.</b></p><p><span class="lab">Date</span> <b>Wednesday 25 November 2026, 10:00 to 12:00 Swiss time</b> (09:00 to 11:00 UK time)</p>';
 }
 function tileHtml(g){
   if(g.plain) return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">with Dave Britain’s group</span></a>';
   var c=counts(g), pct=c.act?c.done/c.act*100:0;
+  if(!c.act) return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">'+c.N+' notes · with Dave Britain’s group</span></a>';
   var dueTxt={all:"by 30 Nov",morph:"by 30 Nov",lexis:"by 30 Nov",vowels:"by 30 Nov",cons:"by 30 Nov",admin:"by end of Nov",geo:"by end of Nov",media:"from Dec 2026",app:"from end of Jan 2027",pi:"no date"}[g.key];
   return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">'+c.done+' of '+c.act+' done · '+esc(dueTxt)+'</span><span class="pb"><i style="width:'+pct.toFixed(1)+'%"></i></span></a>';
 }
@@ -935,13 +922,13 @@ function bucketHtml(g){
   var c=counts(g), pct=c.act?Math.round(c.done/c.act*100):0;
   h+='<section class="block"><div class="bh">'+icon(g)+'<div><h1>'+esc(g.name)+'</h1>'+(g.lead?'<p style="margin-top:4px"><span class="mono">Responsible</span> <b>'+esc(g.lead)+'</b></p>':'')+'</div></div>'
     +'<p class="lede">'+esc(g.meta)+'</p>'
-    +'<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span class="mono"><b>'+c.done+' of '+c.act+'</b> done or decided ('+pct+'%)</span><div class="obar" style="flex:1;min-width:140px"><i style="width:'+pct+'%"></i></div><button type="button" id="cp-'+g.key+'" data-copy="'+g.key+'">Copy link to this to-do list</button></div>'
-    +nameHtml()+noteHtml()+'</section>';
+    +'<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">'+(c.act?'<span class="mono"><b>'+c.done+' of '+c.act+'</b> done or decided ('+pct+'%)</span><div class="obar" style="flex:1;min-width:140px"><i style="width:'+pct+'%"></i></div>':'')+'<button type="button" id="cp-'+g.key+'" data-copy="'+g.key+'">Copy link to this to-do list</button></div>'
+    +(c.act?nameHtml():'')+noteHtml()+'</section>';
   var cur=openSec[g.key]; if(cur===undefined) cur=c.T?"T":(c.D?"D":"N");
-  [["T","Tasks",c.dT+' of '+c.T+' done'],["D","Decisions",c.dD+' of '+c.D+' decided'],["N","Notes",c.N+'']].forEach(function(k){
+  [["T","Tasks",c.dT+' of '+c.T+' done'],["D","Decisions",c.dD+' of '+c.D+' decided'],["N","Notes"+(g.notesAbout?": "+g.notesAbout:""),c.N+'']].forEach(function(k){
     var items=g.items.filter(function(x){return x.k===k[0];}); if(!items.length) return;
     var on=cur===k[0];
-    h+='<section class="acc'+(on?' on':'')+'"><h2><button type="button" class="acch" id="sec-'+g.key+k[0]+'" data-sec="'+g.key+':'+k[0]+'" aria-expanded="'+on+'"><span>'+k[1]+'</span><span class="mono">'+k[2]+' <span aria-hidden="true">'+(on?'−':'+')+'</span></span></button></h2>'+(on?listHtml(items):'')+'</section>';
+    h+='<section class="acc'+(on?' on':'')+'"><h2><button type="button" class="acch" id="sec-'+g.key+k[0]+'" data-sec="'+g.key+':'+k[0]+'" aria-expanded="'+on+'"><span>'+esc(k[1])+'</span><span class="mono">'+k[2]+' <span aria-hidden="true">'+(on?'−':'+')+'</span></span></button></h2>'+(on?((k[0]==="N"?'<p class="mono" style="margin-bottom:6px">Background from the York meeting notes'+(g.notesAbout?' on '+esc(g.notesAbout):'')+'. Nothing to tick here.</p>':'')+listHtml(items)):'')+'</section>';
   });
   return h;
 }
@@ -949,14 +936,14 @@ function homeHtml(){
   var h='<header><p class="kick">CURLEW · After York</p><h1>What to do after the York meeting</h1>'
    +'<p class="dek">This page is built from the notes of the CURLEW team meeting in York on 5 and 6 November 2026. It sorts them into one to-do list per group, so that every team sees what is open and can report its progress here.</p></header>'
    +'<section class="block how"><h2>How to use it</h2><ol><li><b>Find your to-do list</b> below and open it.</li><li><b>Work on the open points</b> in it: tick a task when it is done, and record a decision when it is taken.</li><li><b>Everything for the variables is due by 30 November 2026.</b> That is the hard deadline.</li></ol></section>'
-   +'<div class="top2"><section class="block"><p class="mono">Hard deadline for all variables · Monday, 30 November 2026, 23:59 Bern time</p><div class="count" id="count" role="timer">'+countHtml()+'</div></section>'
+   +'<div class="top2"><section class="block"><p class="mono">Time left for the variables · due Monday, 30 November 2026</p><div class="count" id="count" role="timer">'+countHtml()+'</div></section>'
    +'<section class="block"><p class="mono">Progress, all groups</p><div style="display:flex;flex-direction:column;gap:8px">'+overallHtml()+'</div></section></div>'
    +'<section class="block"><div class="meet">'+meetHtml()+'</div>'+noteHtml()+'</section>'
    +'<section class="block"><h2>To-do lists</h2><nav class="tiles" aria-label="To-do lists">'+GROUPS.map(tileHtml).join("")+'</nav></section>'
    +'<section class="block"><h2>More</h2><nav class="tiles small" aria-label="More pages">'
    +'<a class="tile" id="t-search" href="#search">'+icon({icon:"search"})+'<span class="tn">Search all items</span></a>'
    +'<a class="tile" id="t-said" href="#said">'+icon({icon:"notes"})+'<span class="tn">What was said: the full notes</span></a>'
-   +'<a class="tile" id="t-timeline" href="#timeline">'+icon({icon:"line"})+'<span class="tn">The long run, to summer 2028</span></a></nav></section>'
+   +'<a class="tile" id="t-timeline" href="#timeline">'+icon({icon:"line"})+'<span class="tn">Timeline until summer 2028</span></a></nav></section>'
    +'<section class="block"><h2>Who was at the meeting</h2><p class="lede">'+ATTENDED.map(esc).join(", ")+'.</p></section>';
   return h;
 }
@@ -972,7 +959,7 @@ function searchHtml(){
 function timelineHtml(){
   var now=new Date(), m=(now.getFullYear()-2026)*12+(now.getMonth()-11)+(now.getDate()-1)/31;
   var pc=function(x){return (x/20*100).toFixed(2)+"%";};
-  var h=backHtml()+'<section class="block"><h1>The long run, December 2026 to July 2028</h1><div class="tl"><div class="tlr" style="border-top:0;min-height:0"><div></div><div><div class="yrs"><span style="left:0">’26</span><span style="left:'+pc(1)+'">2027</span><span style="left:'+pc(13)+'">2028</span></div><div class="axis">'+MONTHS.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div></div></div>';
+  var h=backHtml()+'<section class="block"><h1>Timeline until summer 2028</h1><div class="tl"><div class="tlr" style="border-top:0;min-height:0"><div></div><div><div class="yrs"><span style="left:0">’26</span><span style="left:'+pc(1)+'">2027</span><span style="left:'+pc(13)+'">2028</span></div><div class="axis">'+MONTHS.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div></div></div>';
   TL.forEach(function(r){
     h+='<div class="tlr"><div class="l">'+esc(r.l)+'<small>'+esc(r.n)+'</small></div><div class="trk">';
     if(m>=0&&m<=20) h+='<span class="now" style="left:'+pc(m)+'"></span>';
