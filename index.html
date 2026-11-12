@@ -164,6 +164,32 @@ footer{border-top:1px solid var(--rule);font-size:13px}
 .big{font:700 36px/1 var(--display)}
 .obar{height:12px;background:var(--rule);border-radius:999px;overflow:hidden}
 .obar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+
+/* landing page and buckets */
+.wrap{max-width:900px;gap:18px}
+.kick{font:600 12.5px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.how ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;max-width:70ch}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.tiles.small{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.tile{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:14px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);color:var(--ink);text-decoration:none;min-height:44px}
+.tile:hover{background:var(--hover);border-color:var(--accent)}
+.tile .tn{font:700 15.5px/1.25 var(--display)}
+.tile .pb{display:block;width:100%;height:6px;background:var(--rule);border-radius:999px;overflow:hidden}
+.tile .pb i{display:block;height:100%;background:var(--accent)}
+.tiles.small .tile{flex-direction:row;align-items:center;gap:10px}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:var(--hover);color:var(--accent);flex:none}
+.ic b{font:700 19px/1 var(--body)}
+.bh{display:flex;gap:14px;align-items:center}
+.bh h1{font-size:28px}
+.namebox{max-width:420px}
+.acc{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:0 16px}
+.acc.on{padding-bottom:14px}
+.acc h2{margin:0}
+.acch{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;border:0;border-radius:0;background:none;min-height:52px;padding:0;font:700 18px var(--display);color:var(--ink);text-align:left}
+.acch:hover{background:none;color:var(--accent)}
+li.note{font-size:14px;color:var(--sec)}
+input[type=date]{font:400 14px var(--body);min-height:32px;padding:2px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
+.said h3{margin-top:10px}
 </style>
 </head>
 <body>
@@ -223,12 +249,12 @@ var CONSULT = "https://variationista.github.io/CURLEW_Questionnaire-about-the-me
    item: "T|text" task, "D|text" decision, "N|text" note; or {k,t,who,due,d,url,link,pre}
    "Prompt :: comment" prints the prompt in bold. Group defaults: own (owner), due (label), d (date for overdue). */
 var GROUPS = [
-{key:"all", name:"Everyone", sort:"2026-11-15", own:"everyone", due:"no date",
+{key:"all", icon:"people", name:"Everyone", sort:"2026-11-15", own:"everyone", due:"no date",
  lead:"", meta:"Applies to every team member. Advisory associates are welcome to read along but have no tasks.",
  sections:[
   {h:"To do", items:[
-    {k:"T", t:"Vote in Jess Freathy's poll on Discord for the date of the final variable meeting. The poll closes on Thursday 12 November.", due:"by Thu 12 Nov", d:"2026-11-12"},
-    {k:"T", t:"Attend the online final variable meeting", due:"date open, see the Discord poll", d:""},
+    {k:"T", t:"Vote in Jess Freathy's poll on Discord for the date of the final variable meeting (the poll closes on Thursday 12 November)", due:"12 Nov", d:"2026-11-12", soft:1},
+    {k:"T", t:"Attend the online final variable meeting", due:"date open, see the front page", d:DL},
     {k:"T", t:"Have all variables and prompts of your group final", due:"30 Nov 2026", d:DL},
     {k:"T", t:"Give your feedback in the consultation on the metadata questionnaire: rate the topics, pick collection methods, add recommendations", url:CONSULT, link:"Open the consultation"},
     {k:"T", t:"Early-career researchers only: fill in the Doodle for the February meeting in Bern once Christa sends it. This meeting is not for the whole team; there is no May meeting.", who:"early-career researchers"},
@@ -255,7 +281,7 @@ var GROUPS = [
     "D|Items that sit between two groups :: tooth, football, ate/had, BATH (master), commA (banana), /ʒ/ (garage, beige), brown beard (has/got), Ella asks, printer, put up, belt buckle. Agree who keeps which."
   ]}
  ]},
-{key:"vowels", name:"Vowels", sort:"2026-11-30a", own:"vowels group", due:"30 Nov 2026", d:DL,
+{key:"vowels", glyph:"ɑ", name:"Vowels", sort:"2026-11-30a", own:"vowels group", due:"30 Nov 2026", d:DL,
  lead:"Ryan Shaw-Hawkins with Paul Foulkes", meta:"Phonetics prompts are mostly secure and need tidying up. Notes: Ryan Shaw-Hawkins.",
  sections:[
   {h:"Prompt wording", items:[
@@ -314,7 +340,7 @@ var GROUPS = [
     "D|BATH :: 'master' is in the lexis group"
   ]}
  ]},
-{key:"cons", name:"Consonants and suprasegmentals", sort:"2026-11-30b", own:"consonants group", due:"30 Nov 2026", d:DL,
+{key:"cons", glyph:"ʃ", name:"Consonants and suprasegmentals", sort:"2026-11-30b", own:"consonants group", due:"30 Nov 2026", d:DL,
  lead:"to be confirmed", meta:"Agreed next step: define some spare items and check the prompts carefully.",
  sections:[
   {h:"To do", items:[
@@ -373,11 +399,11 @@ var GROUPS = [
     "N|Limits of smartphone microphones :: e.g. spectral tilt"
   ]}
  ]},
-{key:"morph", name:"Morphosyntax", sort:"2026-11-22a", own:"morphosyntax group", due:"30 Nov 2026", d:DL,
- lead:"Oddur Snorrason with David Willis", meta:"Trickier than phonetics because of app logistics and later data processing. Prompts and variables are to be defined and decided by about 20 November. Block led by Oddur Snorrason; notes: Alina Waitzmann.",
+{key:"morph", glyph:"-ed", name:"Morphosyntax", sort:"2026-11-22a", own:"morphosyntax group", due:"30 Nov 2026", d:DL,
+ lead:"Oddur Snorrason with David Willis", meta:"Trickier than phonetics because of app logistics and later data processing. Block led by Oddur Snorrason; notes: Alina Waitzmann.",
  sections:[
   {h:"To do", items:[
-    {k:"T", t:"Define prompts and variables, and decide", due:"about 20 Nov", d:"2026-11-22"},
+    {k:"T", t:"Define prompts and variables, and decide"},
     "D|Decide which variables get judgement tasks instead of (or next to) production data",
     "D|Decide the follow-up format :: 'Which one do you use?'; elicitation plus follow-up for every item; binary, yes/no/maybe or scale (a Likert scale needs normalisation questions and complex statistics); 'Could you say this?' and if yes, they say it. Every option costs time.",
     "D|Prompt type :: written, audio or visual. Preferred: participants read the prompt out themselves, to get more vernacular speech (audio needs headphones and risks accommodation)",
@@ -427,16 +453,16 @@ var GROUPS = [
     "T|44 :: different dogs; 'whose bone is it?'"
   ]}
  ]},
-{key:"lexis", name:"Lexis and discourse", sort:"2026-11-22b", own:"lexis and discourse group", due:"30 Nov 2026", d:DL,
- lead:"Jess Freathy with Dave Britain", meta:"Discourse-pragmatic prompts and variables are to be defined and decided by about 20 November, together with morphosyntax. Fifteen items carry a tick in the notes; they stay open here until Christa confirms them.",
+{key:"lexis", glyph:"Aa", name:"Lexis and discourse", sort:"2026-11-22b", own:"lexis and discourse group", due:"30 Nov 2026", d:DL,
+ lead:"Jess Freathy with Dave Britain", meta:"Discourse-pragmatic prompts and variables are defined and decided together with morphosyntax. Fifteen items were already ticked at the meeting and are shown as done.",
  sections:[
   {h:"To do", items:[
-    {k:"T", t:"Discourse and pragmatics: define prompts and variables, and decide", due:"about 20 Nov", d:"2026-11-22"},
+    {k:"T", t:"Discourse and pragmatics: define prompts and variables, and decide"},
     "D|Decide which items move to judgement tasks (intensifiers, 'lowkey', chatting/yapping)",
     "T|Clean up the instructions (fill in the blank versus answer the question etc.)",
     "T|Be consistent for states of being and feelings :: emojis, real people or cartoons"
   ]},
-  {h:"Ticked at the meeting (to be confirmed)", items:[
+  {h:"Done at the meeting (ticked in the notes)", items:[
     {k:"T", pre:1, t:"Potential of eliciting 'going cinema' etc."},
     {k:"T", pre:1, t:"'This weekend' :: use an activity in the past ('We went to London on the weekend / at the weekend')"},
     {k:"T", pre:1, t:"Trousers :: contentious; an image of several pairs would elicit 'trousers' even from speakers who use other variants"},
@@ -485,8 +511,8 @@ var GROUPS = [
     "N|Asking about childhood and the local area gives access to local features; 'What do you do in your free time? Can you tell me more about that?' lets the speaker become the expert"
   ]}
  ]},
-{key:"geo", name:"Localities", plain:"Dave Britain and the geosampling group are working on the locality selection and will report back to the team.", sections:[]},
-{key:"media", name:"Media", sort:"2026-12", own:"Salina Cuddy", due:"no date",
+{key:"geo", icon:"pin", name:"Localities", plain:"Dave Britain and the geosampling group are working on the locality selection and will report back to the team.", sections:[]},
+{key:"media", icon:"horn", name:"Media", sort:"2026-12", own:"Salina Cuddy", due:"no date",
  lead:"Salina Cuddy", meta:"Social media runs from December 2026 through the whole data collection; the big interactive posts come once recruitment can be pushed.",
  sections:[
   {h:"To do", items:[
@@ -514,7 +540,7 @@ var GROUPS = [
     "N|Content ideas :: scone and roll, jacket potato, 'what do you say that others don't?', strange SED words to guess, Christmas"
   ]}
  ]},
-{key:"admin", name:"Administration", sort:"2026-11-30c", own:"Christa Schneider", due:"no date",
+{key:"admin", icon:"board", name:"Administration", sort:"2026-11-30c", own:"Christa Schneider", due:"no date",
  lead:"Christa Schneider", meta:"Project organisation, consent form and metadata questionnaire.",
  sections:[
   {h:"To do", items:[
@@ -536,7 +562,7 @@ var GROUPS = [
     "D|Short, simple questions in the questionnaire or in the interview; order of presentation"
   ]}
  ]},
-{key:"app", name:"App and data collection", sort:"2027-01", own:"owner open", due:"no date",
+{key:"app", icon:"phone", name:"App and data collection", sort:"2027-01", own:"owner open", due:"no date",
  lead:"Adrian Leemann and Daniel Wanitsch", meta:"Daniel Wanitsch develops the app with his company. The app depends on the variables being final on 30 November. The data sits in Bern: a NAS has been set up and people will get access soon.",
  sections:[
   {h:"To do", items:[
@@ -564,8 +590,8 @@ var GROUPS = [
     "D|Should the questionnaire come after the recording, or earlier? (timing still open)"
   ]}
  ]},
-{key:"pi", name:"PIs", sort:"9999", own:"PIs (proposed)", due:"no date",
- lead:"Adrian Leemann, Dave Britain, Paul Foulkes, David Willis", meta:"Proposed: the PIs own ethics and data sharing (to be confirmed by the PIs).",
+{key:"pi", icon:"flag", name:"PIs", sort:"9999", own:"PIs, with Christa Schneider", due:"no date",
+ lead:"Adrian Leemann, Dave Britain, Paul Foulkes, David Willis", meta:"Ethics and data sharing sit with the PIs and can be resolved together with Christa Schneider.",
  sections:[
   {h:"Ethics and data sharing", items:[
     "T|Confirm that Bern's ethics approval (through data management) covers all partners :: Oxford accepts Bern's data protection as ethical approval; York's stance is not known",
@@ -740,7 +766,7 @@ var PEOPLE = [
  ["AL","Adrian Leemann","PI"],["DB","Dave Britain","PI"],["PF","Paul Foulkes","PI"],["DW","David Willis","PI"],
  ["RSH","Ryan Shaw-Hawkins","team; notes for vowels"],["AW","Alina Waitzmann","team; notes for morphosyntax"],
  ["","Oddur Snorrason","team; led the morphosyntax block"],
- ["LB","Liz Blackwell","team"],["EC","Eve Canning","team"],["","Jess Freathy","team"],["","Josh Coombs","team"],
+ ["LB","Liz Blackwell","team"],["EC","Eve Canning","team"],["","Jess Freathy","team"],["","Josh Coombs","team"],["","Emilio Fletcher","attended the York meeting"],
  ["","Salina Cuddy","media"],["","Daniel Wanitsch","developer and IT"],["","Christa Schneider","project organisation"],
  ["JW","Jessica Wormald","University of York, Advisory Associate"],
  ["","George Bailey","University of York, Advisory Associate; attended"],
@@ -755,7 +781,7 @@ GROUPS.forEach(function(g){
   g.sections.forEach(function(s,si){ s.items.forEach(function(it,ii){
     var o = typeof it==="string" ? {k:it.charAt(0), t:it.slice(2)} : it;
     var x = {id:g.key+"-"+si+"-"+ii, g:g.key, h:s.h, k:o.k, t:o.t, pre:!!o.pre, url:o.url||"", link:o.link||"",
-      who:o.who||g.own, due:o.due||g.due, d:(o.d!==undefined?o.d:(o.due?"":g.d||""))};
+      who:o.who||g.own, due:o.due||g.due, d:(o.d!==undefined?o.d:(o.due?"":g.d||"")), soft:!!o.soft};
     x.hay = (x.t+" "+x.who+" "+s.h+" "+g.name).toLowerCase();
     g.items.push(x); ITEMS.push(x);
   });});
@@ -764,13 +790,27 @@ function search(q){ q=String(q||"").trim().toLowerCase(); return q?ITEMS.filter(
 if (typeof document === "undefined") { globalThis.__CURLEW = {GROUPS:GROUPS, ITEMS:ITEMS, search:search, PEOPLE:PEOPLE, SAID:SAID}; return; }
 
 /* ---------- state ---------- */
+var ATTENDED = ["Adrian Leemann","Dave Britain","Paul Foulkes","David Willis","Christa Schneider","Ryan Shaw-Hawkins","Alina Waitzmann","Oddur Snorrason","Liz Blackwell","Eve Canning","Jess Freathy","Josh Coombs","Emilio Fletcher","Salina Cuddy","Daniel Wanitsch","Jessica Wormald","George Bailey","Claire Childs","Gerry Docherty"];
+var ICON = {
+ people:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M15.5 14.2c2.9-.3 5.5 1.800 5.500 5.300"/>',
+ pin:'<path d="M12 21s-6.500-6.200-6.500-11a6.500 6.500 0 0 1 13 0c0 4.800-6.500 11-6.500 11z"/><circle cx="12" cy="10" r="2.300"/>',
+ horn:'<path d="M4 10v4h3l8 4V6l-8 4H4z"/><path d="M18 9.500c1 .700 1 4.300 0 5"/><path d="M7 14l1 5h2.500"/>',
+ board:'<rect x="5" y="4.500" width="14" height="16" rx="1.500"/><path d="M9 4.500V3h6v1.500"/><path d="M8.500 10h7M8.500 13.500h7M8.500 17h4"/>',
+ phone:'<rect x="7" y="2.500" width="10" height="19" rx="2"/><path d="M11 18.500h2"/>',
+ flag:'<path d="M6 21V4"/><path d="M6 5h11l-2 3.500 2 3.500H6"/>',
+ search:'<circle cx="10.500" cy="10.500" r="6"/><path d="M15 15l5.500 5.500"/>',
+ notes:'<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 15.500h7"/>',
+ line:'<path d="M3 18h18"/><path d="M5 18V9M10 18V5M15 18v-7M20 18v-4"/>'
+};
+function icon(g){ return '<span class="ic" aria-hidden="true">'+(g.glyph?'<b>'+esc(g.glyph)+'</b>':'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.700" stroke-linecap="round" stroke-linejoin="round">'+ICON[g.icon]+'</svg>')+'</span>'; }
+
 var marks = {}, meeting = null, loaded = false, loadNote = "Loading the shared ticks…";
 var db = null, user = null, uid = null, canWrite = null, busy = {};
-var q = "", editing = null, draft = "", reveal = {}, flash = "", meetDraft = "", logs = [], logAll = false, logStart = "", isOwner = false, BYID = {};
+var q = "", editing = null, draft = "", flash = "", meetDraft = "", openSec = {}, openSaid = -1, BYID = {};
 ITEMS.forEach(function(x){BYID[x.id]=x;});
 window.curlewLabel=function(id){var x=BYID[id];return x?BYG[x.g].name+": "+x.t.split(" :: ")[0].slice(0,120):id;};
-var LS = "curlew-york-ui-v2", ui = {group:"all", openOnly:true, name:""};
-try { var saved = JSON.parse(localStorage.getItem(LS)||"null"); if(saved&&BYG[saved.group]) ui.group=saved.group; if(saved&&saved.openOnly===false) ui.openOnly=false; if(saved&&typeof saved.name==="string") ui.name=saved.name.slice(0,60); } catch(e){}
+var LS = "curlew-york-ui-v2", ui = {name:""};
+try { var saved = JSON.parse(localStorage.getItem(LS)||"null"); if(saved&&typeof saved.name==="string") ui.name=saved.name.slice(0,60); } catch(e){}
 function saveUi(){ try{ localStorage.setItem(LS, JSON.stringify(ui)); }catch(e){} }
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -778,172 +818,127 @@ function fmt(t){var i=t.indexOf(" :: "); return i<0?esc(t):"<b>"+esc(t.slice(0,i
 function $(id){return document.getElementById(id);}
 function ymd(dt){return dt.getFullYear()+"-"+("0"+(dt.getMonth()+1)).slice(-2)+"-"+("0"+dt.getDate()).slice(-2);}
 function pd(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
-var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var MONL=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var WDL=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 function nice(s){var d=pd(s.slice(0,10));return d.getDate()+" "+MON[d.getMonth()];}
-function niceLong(s){var d=pd(s.slice(0,10));return d.getDate()+" "+["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]+" "+d.getFullYear();}
+function niceLong(s){var d=pd(s.slice(0,10));return d.getDate()+" "+MONL[d.getMonth()]+" "+d.getFullYear();}
 function isoLocalDay(iso){var d=new Date(iso);return isNaN(d)?PAGE_DATE:ymd(d);}
 function isDone(x){var m=marks[x.id];return !!m && (x.k==="T"?m.s==="done":m.s==="decided");}
-function counts(g){var r={T:0,D:0,N:0,done:0,act:0};g.items.forEach(function(x){r[x.k]++;if(x.k!=="N"){r.act++;if(isDone(x))r.done++;}});return r;}
+function counts(g){var r={T:0,D:0,N:0,done:0,act:0,dT:0,dD:0};g.items.forEach(function(x){r[x.k]++;if(x.k!=="N"){r.act++;if(isDone(x)){r.done++;r["d"+x.k]++;}}});return r;}
+function fromNotes(m){return !!m&&(m.src==="notes"||m.name==="Meeting notes");}
 function who(id){return '<span data-uid="'+esc(id||"")+'">someone</span>';}
 function whoM(m){return (m&&m.name)?esc(m.name):who(m&&m.by);}
 function writable(){return !!db && canWrite!==false;}
-
-/* ---------- pieces ---------- */
-function headHtml(){
-  var ms=DEADLINE-Date.now(), days=Math.floor(ms/86400000), h;
-  if(ms<=0) h='The variables were due on <span class="red">30 November</span>';
-  else if(days===0) h='The variables are final <span class="red">today</span>';
-  else h='<span class="red">'+days+(days===1?' day':' days')+'</span> until the variables are final';
-  var last=PAGE_DATE; Object.keys(marks).forEach(function(k){var a=marks[k]&&marks[k].at; if(a){var d=isoLocalDay(a); if(d>last) last=d;}});
-  if(meeting&&meeting.at){var md=isoLocalDay(meeting.at); if(md>last) last=md;}
-  return '<p class="mono" style="letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600">CURLEW · After York</p><h1 style="margin-top:6px">'+h+'</h1>'
-   +'<p class="dek">What each group has to do after the York meeting and by when, with the hard deadline for all variables on 30 November 2026, 23:59 Bern time.</p>'
-   +'<p class="mono byline">Compiled by Christa Schneider from the notes of 5 and 6 November 2026 · updated '+esc(niceLong(last))+'</p>';
-}
-function meetHtml(){
-  var h=(meeting&&meeting.date)?'<p><b>Final variable meeting, online.</b> The date was chosen in Jess Freathy’s poll on Discord.</p>':'<p><b>Final variable meeting, online.</b> The date is still open. Jess Freathy’s poll on Discord offers dates between <b>19 and 26 November</b> and closes on Thursday 12 November, so please vote now.</p>';
-  if(meeting&&meeting.date){
-    h+='<p><span class="lab">Date chosen</span> <b>'+esc(["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][pd(meeting.date).getDay()]+" "+niceLong(meeting.date))+'</b> <span class="mono">set by '+whoM(meeting)+(meeting.at?', '+esc(nice(isoLocalDay(meeting.at))):'')+'</span></p>';
-    if(writable()) h+='<div class="acts"><button type="button" id="mt-clear" data-meet="">Change: no date yet</button></div>';
-  } else {
-    h+='<p><span class="lab">Poll result</span> No result yet.</p>';
-    if(writable()) h+='<div class="acts"><label class="mono" for="mt-date">Result known? Set the date:</label><input type="date" id="mt-date" min="2026-11-12" max="2026-11-30" value="'+esc(meetDraft)+'" style="font:400 14px var(--body);min-height:32px;padding:2px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)"><button type="button" id="mt-set" data-meetset="1">Set date</button></div>';
-  }
-  return h;
-}
-function stripHtml(){
-  var today=ymd(new Date());
-  if(today>DL) return '<p class="lede">The 30 November deadline has passed.</p>';
-  var days=[], d=pd(today); while(ymd(d)<=DL){days.push(ymd(d)); d.setDate(d.getDate()+1);}
-  var n=days.length, cols='grid-template-columns:repeat('+n+',minmax(0,1fr))';
-  var h='<div class="days" style="'+cols+'" role="img" aria-label="Days from today to 30 November">';
-  days.forEach(function(s,i){var dt=pd(s),we=dt.getDay()===0||dt.getDay()===6;
-    h+='<div class="c'+(we?' we':'')+(i===0?' today':'')+(s===DL?' dl':'')+'">'+WD[dt.getDay()].charAt(0)+'<br>'+dt.getDate()+'</div>';});
-  h+='</div><p class="mono">Black cell: today, '+esc(nice(today))+' · red: 30 Nov deadline</p>';
-  var mdate=meeting&&meeting.date;
-  var MS=[
-   {a:today,b:"2026-11-12",when:"By Thu 12 Nov",what:"Vote in the Discord poll",who:"everyone"},
-   {a:mdate||"2026-11-19",b:mdate||"2026-11-26",when:mdate?nice(mdate):"Date open, 19 to 26 Nov",what:"Online final variable meeting",who:"everyone"},
-   {a:"2026-11-20",b:"2026-11-20",when:"About 20 Nov",what:"Morphosyntax and discourse prompts and variables decided",who:"morphosyntax; lexis and discourse"},
-   {a:DL,b:DL,when:"30 Nov",what:"All variables and prompts final (all variable groups) · consent form (Christa) · metadata questionnaire, next version (Christa, late November)",who:"",dl:1}
-  ];
-  MS.forEach(function(m){
-    h+='<div class="ms"><p class="t"><span class="mono'+(m.dl?' red':'')+'">'+esc(m.when)+'</span> &nbsp;<b>'+esc(m.what)+'</b>'+(m.who?' <span class="mono">'+esc(m.who)+'</span>':'')+'</p>';
-    if(m.b<today){ h+='<p class="mono">passed</p></div>'; return; }
-    var i0=Math.max(0,days.indexOf(m.a<today?today:m.a)), i1=days.indexOf(m.b); if(i1<0) i1=n-1;
-    h+='<div class="mtrack" style="'+cols+'"><i class="'+(i0===i1?'pt':'')+(m.dl?' dlm':'')+'" style="grid-column:'+(i0+1)+' / '+(i1+2)+'"></i></div></div>';
-  });
-  return h;
-}
 function isNov(x){ if(x.k==="N") return false; var vg={vowels:1,cons:1,morph:1,lexis:1}[x.g];
   return (vg&&x.due!=="test phase")||(x.d&&x.d<=DL)||(x.g==="admin"&&x.k==="D")||(x.g==="all"&&!!x.url); }
-function overallHtml(){
-  var t=0,d=0,lt=0,ld=0; ITEMS.forEach(function(x){ if(x.k==="N") return; if(isNov(x)){t++; if(isDone(x)) d++;} else {lt++; if(isDone(x)) ld++;} });
-  var pct=t?Math.round(d/t*100):0;
-  return '<div style="display:flex;align-items:baseline;gap:10px"><span class="big">'+pct+'%</span><span class="mono">'+d+' of '+t+' tasks and decisions done</span></div><div class="obar" role="img" aria-label="'+pct+' percent complete"><i style="width:'+pct+'%"></i></div><p class="mono">Later or undated, not counted above: '+ld+' of '+lt+'</p>';
-}
+
+/* ---------- pieces ---------- */
 function countHtml(){
   var ms=DEADLINE-Date.now(); if(ms<=0) return '<div><b>0</b><span>deadline passed</span></div>';
   var sec=Math.floor(ms/1000),d=Math.floor(sec/86400),hh=Math.floor(sec%86400/3600),mm=Math.floor(sec%3600/60),ss=sec%60;
   return '<div><b>'+d+'</b><span>days</span></div><div><b>'+hh+'</b><span>hours</span></div><div><b>'+mm+'</b><span>min</span></div><div><b>'+ss+'</b><span>sec</span></div>';
 }
-function clock(iso){var d=new Date(iso); if(isNaN(d)) return ""; return nice(ymd(d))+", "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);}
-function logHtml(){
-  if(!db) return '<p class="lede">The change log is not available in this view.</p>';
-  if(!logStart) return '<p class="lede">The change log has not been started yet. Changes made before it starts are not recorded here.</p>'+(isOwner?'<p><button type="button" id="log-start" data-logstart="1">Start the change log now</button></p>':'');
-  var list=logs.filter(function(e){return e.at>=logStart;});
-  var top='<p class="mono">Recording since '+esc(clock(logStart))+'</p>'+(isOwner?'<p><button type="button" class="link" id="log-stop" data-logstop="1">Stop and hide the change log</button></p>':'');
-  if(!list.length) return top+'<p class="lede">No changes recorded yet. Every tick, undo, decision and reopening will be listed here with name and time.</p>';
-  var verbs={done:"ticked",undone:"unticked",decided:"decided",reopened:"reopened","meeting-set":"set the meeting date to","meeting-cleared":"cleared the meeting date"};
-  var show=logAll?list:list.slice(0,15);
-  var h=top+'<ul class="items">'+show.map(function(e){
-    var x=BYID[e.id], t=x?x.t.split(" :: ")[0]:"", head=t.length>90?t.slice(0,88)+"…":t;
-    var whoTxt=e.src==="notes"?'From the meeting notes':whoM(e);
-    var body=e.id==="meeting"?(e.date?esc(niceLong(e.date)):""):(x?'<span class="mono">'+esc(BYG[x.g].name)+'</span> '+esc(head):esc(e.id));
-    return '<li><span><span class="mono">'+esc(clock(e.at))+'</span> · <b>'+whoTxt+'</b> '+esc((e.act==="undone"&&x&&x.k==="D")?"reopened":(verbs[e.act]||e.act))+' '+body+(e.answer?' <span class="ans">→ '+esc(e.answer)+'</span>':'')+(e.prev?' <span class="mono">(previous answer: '+esc(e.prev)+')</span>':'')+'</span></li>';
-  }).join("")+'</ul>';
-  if(list.length>15) h+='<p><button type="button" class="link" id="log-more" data-logall="1">'+(logAll?'Show the latest 15 only':'Show all '+list.length+' changes')+'</button></p>';
+function overallHtml(){
+  var t=0,d=0; ITEMS.forEach(function(x){ if(isNov(x)){t++; if(isDone(x)) d++;} });
+  var pct=t?Math.round(d/t*100):0;
+  return '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span class="big">'+pct+'%</span><span class="mono">'+d+' of '+t+' tasks and decisions done</span></div><div class="obar" role="img" aria-label="'+pct+' percent complete"><i style="width:'+pct+'%"></i></div><p class="mono">Counts what is due by 30 November. Later items are not counted; they show their own due date.</p>';
+}
+function meetHtml(){
+  var today=ymd(new Date()), h;
+  if(meeting&&meeting.date){
+    h='<p><b>Next meeting: final variable meeting, online.</b></p><p><span class="lab">Date</span> <b>'+esc(WDL[pd(meeting.date).getDay()]+" "+niceLong(meeting.date))+'</b> <span class="mono">set by '+whoM(meeting)+(meeting.at?', '+esc(nice(isoLocalDay(meeting.at))):'')+'</span></p>';
+    if(writable()) h+='<div class="acts"><button type="button" id="mt-clear" data-meet="">Change: no date yet</button></div>';
+  } else {
+    h='<p><b>Next meeting: final variable meeting, online.</b> The date is not fixed yet. '+(today>"2026-11-12"?'Jess Freathy’s poll on Discord has closed; the date will appear here as soon as it is announced.':'Jess Freathy’s poll on Discord offers dates between 19 and 26 November and closes on Thursday 12 November.')+'</p>';
+    if(writable()) h+='<div class="acts"><label class="mono" for="mt-date">Date known? Set it:</label><input type="date" id="mt-date" min="2026-11-12" max="2026-11-30" value="'+esc(meetDraft)+'"><button type="button" id="mt-set" data-meetset="1">Set date</button></div>';
+  }
   return h;
 }
-function logAdd(o){ if(!db||!logStart) return; try{ db.collection("log").add(stamp(o)).then(null,function(){}); }catch(e){} }
-function pickerHtml(){
-  return GROUPS.map(function(g){return '<a class="btn'+(ui.group===g.key&&!q?' on':'')+'" id="pk-'+g.key+'" href="#g-'+g.key+'"'+(ui.group===g.key?' aria-current="true"':'')+'>'+esc(g.name)+'</a>';}).join("");
+function tileHtml(g){
+  if(g.plain) return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">with Dave Britain’s group</span></a>';
+  var c=counts(g), pct=c.act?c.done/c.act*100:0;
+  var dueTxt={all:"by 30 Nov",morph:"by 30 Nov",lexis:"by 30 Nov",vowels:"by 30 Nov",cons:"by 30 Nov",admin:"by end of Nov",media:"from Dec 2026",app:"from end of Jan 2027",pi:"no date"}[g.key];
+  return '<a class="tile" id="t-'+g.key+'" href="#g-'+g.key+'">'+icon(g)+'<span class="tn">'+esc(g.name)+'</span><span class="mono">'+c.done+' of '+c.act+' done · '+esc(dueTxt)+'</span><span class="pb"><i style="width:'+pct.toFixed(1)+'%"></i></span></a>';
 }
-function progressHtml(){
-  var gs=GROUPS.filter(function(g){return !g.plain;}).sort(function(a,b){return a.sort<b.sort?-1:1;});
-  return gs.map(function(g){var c=counts(g),pct=c.act?c.done/c.act*100:0;
-    var dueTxt={all:"first due 12 Nov",morph:"about 20 Nov, then 30 Nov",lexis:"about 20 Nov, then 30 Nov",vowels:"30 Nov",cons:"30 Nov",admin:"end of Nov",media:"from Dec 2026",app:"end of Jan 2027",pi:"no date"}[g.key];
-    return '<a class="prow" href="#g-'+g.key+'"><span><b>'+esc(g.name)+'</b><span class="d">'+esc(dueTxt)+'</span></span><span class="pb"><i style="width:'+pct.toFixed(1)+'%"></i></span><span class="n">'+c.done+' of '+c.act+'</span></a>';
-  }).join("");
+function nameHtml(){
+  return '<div class="namebox"><label class="mono" for="myname">Your name (shown next to what you tick; remembered on this device)</label><input type="text" id="myname" maxlength="60" autocomplete="name" placeholder="First name and surname" value="'+esc(ui.name)+'"></div>';
+}
+function noteHtml(){
+  var h="";
+  if(flash) h+='<p class="notice" role="status">'+esc(flash)+'</p>';
+  if(!loaded) h+='<p class="notice" role="status">'+esc(loadNote)+'</p>';
+  else if(!writable()) h+='<p class="notice" role="status">'+esc(window.CURLEW_RO_NOTE||"Read-only: you can see what is ticked and decided, but not change it. Ask Christa Schneider for contributor access to this page.")+'</p>';
+  return h;
 }
 function itemHtml(x){
   var m=marks[x.id], done=isDone(x), today=ymd(new Date()), h="";
   if(x.k==="T"){
-    var over=!done&&x.d&&x.d<today;
+    var over=!done&&!x.soft&&x.d&&x.d<today;
     h+='<li class="task'+(done?' done':'')+'"><label class="row" for="cb-'+x.id+'"><input type="checkbox" id="cb-'+x.id+'" data-tick="'+x.id+'"'+(done?' checked':'')+(writable()?'':' disabled')+'><span class="tx">'+fmt(x.t)+(x.url?' <a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.link||x.url)+'</a>':'')+'</span></label>';
-    h+='<div class="meta"><span class="mono">'+esc(x.who)+'</span><span class="mono'+(over?' red':'')+'">'+esc(x.due)+(over?' · overdue':'')+'</span>';
-    if(x.pre&&!done) h+='<span class="lab">Ticked at the meeting (to be confirmed)</span>';
-    if(done) h+='<span class="mono">ticked by '+whoM(m)+', '+esc(nice(isoLocalDay(m.at)))+'</span>'+(writable()?'<button type="button" class="link" id="un-'+x.id+'" data-undo="'+x.id+'">undo</button>':'');
+    h+='<div class="meta">';
+    if(done) h+='<span class="lab">Done</span><span class="mono">'+(fromNotes(m)?'at the meeting, per the notes':'ticked by '+whoM(m)+', '+esc(nice(isoLocalDay(m.at))))+'</span>'+(writable()?'<button type="button" class="link" id="un-'+x.id+'" data-undo="'+x.id+'">undo</button>':'');
+    else h+='<span class="mono">'+esc(x.who)+'</span><span class="mono'+(over?' red':'')+'">due: '+esc(x.due)+(over?' · overdue':'')+'</span>';
     h+='</div></li>';
   } else if(x.k==="D"){
     h+='<li class="dec'+(done?' decided':'')+'"><div class="tx">'+fmt(x.t)+'</div><div class="meta">';
-    if(done){
-      h+='<span class="lab">Decided</span><span class="ans">'+esc(m.answer||"")+'</span><span class="mono">'+(m.src==="notes"?'decided at the meeting, per the notes':'by '+whoM(m)+', '+esc(nice(isoLocalDay(m.at))))+'</span>'+(writable()?'<button type="button" class="link" id="un-'+x.id+'" data-undo="'+x.id+'">reopen</button>':'');
-    } else if(editing===x.id){
-      h+='<form class="af" data-form="'+x.id+'"><label class="mono" for="ans-'+x.id+'">What did we decide?</label><input type="text" id="ans-'+x.id+'" maxlength="300" autocomplete="off"><button type="submit" id="sv-'+x.id+'">Save</button><button type="button" id="cn-'+x.id+'" data-cancel="1">Cancel</button></form>';
-    } else {
-      h+='<span class="mono">Open</span>'+(writable()?'<button type="button" id="md-'+x.id+'" data-decide="'+x.id+'">Mark decided</button>':'');
-    }
+    if(done) h+='<span class="lab">Decided</span><span class="ans">'+esc(m.answer||"")+'</span><span class="mono">'+(fromNotes(m)?'at the meeting, per the notes':'by '+whoM(m)+', '+esc(nice(isoLocalDay(m.at))))+'</span>'+(writable()?'<button type="button" class="link" id="un-'+x.id+'" data-undo="'+x.id+'">reopen</button>':'');
+    else if(editing===x.id) h+='<form class="af" data-form="'+x.id+'"><label class="mono" for="ans-'+x.id+'">What did we decide?</label><input type="text" id="ans-'+x.id+'" maxlength="300" autocomplete="off" value="'+esc(draft)+'"><button type="submit" id="sv-'+x.id+'">Save</button><button type="button" id="cn-'+x.id+'" data-cancel="1">Cancel</button></form>';
+    else h+='<span class="mono">Open</span>'+(writable()?'<button type="button" id="md-'+x.id+'" data-decide="'+x.id+'">Mark decided</button>':'');
     h+='</div></li>';
-  } else h+='<li><span>'+fmt(x.t)+'</span></li>';
+  } else h+='<li class="note"><span>'+fmt(x.t)+'</span></li>';
   return h;
 }
-function listByKind(items,k,gkey,searching){
-  var all=items.filter(function(x){return x.k===k;}); if(!all.length) return "";
-  var hideDone=ui.openOnly&&!searching&&!reveal[gkey+k];
-  var done=all.filter(isDone).length, show=hideDone?all.filter(function(x){return !isDone(x);}):all;
-  var title=k==="T"?"Tasks":"Decisions", word=k==="T"?"done":"decided";
-  var h='<div class="kind"><h3>'+title+'</h3><span class="mono">'+done+' of '+all.length+' '+word+'</span></div>';
-  var lastH=null; h+='<ul class="items">';
-  show.forEach(function(x){ if(x.h!==lastH){ h+='</ul><p class="mono sub">'+esc(x.h)+'</p><ul class="items">'; lastH=x.h; } h+=itemHtml(x); });
-  h+='</ul>';
-  if(!show.length) h+='<p class="lede">Nothing open here.</p>';
-  if(ui.openOnly&&!searching&&done) h+='<p><button type="button" class="link" id="rv-'+gkey+k+'" data-reveal="'+gkey+k+'">'+done+' '+word+', '+(reveal[gkey+k]?'hide them':'show them')+'</button></p>';
+function listHtml(items){
+  var lastH=null, h='<ul class="items">';
+  items.forEach(function(x){ if(x.h!==lastH){ h+='</ul><p class="mono sub">'+esc(x.h)+'</p><ul class="items">'; lastH=x.h; } h+=itemHtml(x); });
+  return h+'</ul>';
+}
+function backHtml(){ return '<p><a class="btn" id="back" href="#home">← All to-do lists</a></p>'; }
+function bucketHtml(g){
+  var h=backHtml();
+  if(g.plain) return h+'<section class="block"><div class="bh">'+icon(g)+'<h1>'+esc(g.name)+'</h1></div><p class="dek">'+esc(g.plain)+'</p></section>';
+  var c=counts(g), pct=c.act?Math.round(c.done/c.act*100):0;
+  h+='<section class="block"><div class="bh">'+icon(g)+'<div><h1>'+esc(g.name)+'</h1>'+(g.lead?'<p style="margin-top:4px"><span class="mono">Responsible</span> <b>'+esc(g.lead)+'</b></p>':'')+'</div></div>'
+    +'<p class="lede">'+esc(g.meta)+'</p>'
+    +'<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span class="mono"><b>'+c.done+' of '+c.act+'</b> done or decided ('+pct+'%)</span><div class="obar" style="flex:1;min-width:140px"><i style="width:'+pct+'%"></i></div><button type="button" id="cp-'+g.key+'" data-copy="'+g.key+'">Copy link to this to-do list</button></div>'
+    +nameHtml()+noteHtml()+'</section>';
+  var cur=openSec[g.key]; if(cur===undefined) cur=c.T?"T":(c.D?"D":"N");
+  [["T","Tasks",c.dT+' of '+c.T+' done'],["D","Decisions",c.dD+' of '+c.D+' decided'],["N","Notes",c.N+'']].forEach(function(k){
+    var items=g.items.filter(function(x){return x.k===k[0];}); if(!items.length) return;
+    var on=cur===k[0];
+    h+='<section class="acc'+(on?' on':'')+'"><h2><button type="button" class="acch" id="sec-'+g.key+k[0]+'" data-sec="'+g.key+':'+k[0]+'" aria-expanded="'+on+'"><span>'+k[1]+'</span><span class="mono">'+k[2]+' <span aria-hidden="true">'+(on?'−':'+')+'</span></span></button></h2>'+(on?listHtml(items):'')+'</section>';
+  });
   return h;
 }
-function cardHtml(g,items,searching){
-  if(g.plain) return searching?"":'<section class="card" id="g-'+g.key+'"><h2>'+esc(g.name)+'</h2><p>'+esc(g.plain)+'</p></section>';
-  if(searching&&!items.length) return "";
-  var c=counts(g);
-  var h='<section class="card" id="g-'+g.key+'"><div class="chead"><div><h2>'+esc(g.name)+'</h2>'
-   +(g.lead?'<p style="margin-top:2px"><span class="mono">Lead</span> <b>'+esc(g.lead)+'</b></p>':'')+'</div>'
-   +'<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="mono">'+c.done+' of '+c.act+' done or decided</span><button type="button" id="cp-'+g.key+'" data-copy="'+g.key+'">Copy link to this list</button></div></div>'
-   +'<p class="lede">'+esc(g.meta)+'</p><p class="mono">'+c.T+' tasks · '+c.D+' decisions · '+c.N+' notes'+(searching?' · showing '+items.length+' matching':'')+'</p>';
-  h+=listByKind(items,"T",g.key,searching)+listByKind(items,"D",g.key,searching);
-  var notes=items.filter(function(x){return x.k==="N";});
-  if(notes.length) h+='<details class="notes"'+(searching?' open':'')+'><summary class="mono">Notes ('+notes.length+')</summary><ul class="items">'+notes.map(itemHtml).join("")+'</ul></details>';
-  return h+'</section>';
-}
-function cardsHtml(){
-  var h="";
-  if(flash) h+='<p class="notice" role="status">'+esc(flash)+'</p>';
-  if(q){
-    var hit=search(q), by={}; hit.forEach(function(x){(by[x.g]=by[x.g]||[]).push(x);});
-    h+='<p class="mono" role="status">'+hit.length+' items match "'+esc(q)+'" across all groups</p>';
-    GROUPS.forEach(function(g){ if(by[g.key]) h+=cardHtml(g,by[g.key],true); });
-    if(!hit.length) h+='<p class="lede">No item matches. Try a shorter word.</p>';
-  } else h+=cardHtml(BYG[ui.group],BYG[ui.group].items,false);
+function homeHtml(){
+  var h='<header><p class="kick">CURLEW · After York</p><h1>What to do after the York meeting</h1>'
+   +'<p class="dek">This page is built from the notes of the CURLEW team meeting in York on 5 and 6 November 2026. It sorts them into one to-do list per group, so that every team sees what is open and can report its progress here.</p></header>'
+   +'<section class="block how"><h2>How to use it</h2><ol><li><b>Find your to-do list</b> below and open it.</li><li><b>Work on the open points</b> in it: tick a task when it is done, and record a decision when it is taken.</li><li><b>Everything for the variables is due by 30 November 2026.</b> That is the hard deadline.</li></ol></section>'
+   +'<div class="top2"><section class="block"><p class="mono">Hard deadline for all variables · Monday, 30 November 2026, 23:59 Bern time</p><div class="count" id="count" role="timer">'+countHtml()+'</div></section>'
+   +'<section class="block"><p class="mono">Progress, all groups</p><div style="display:flex;flex-direction:column;gap:8px">'+overallHtml()+'</div></section></div>'
+   +'<section class="block"><div class="meet">'+meetHtml()+'</div>'+noteHtml()+'</section>'
+   +'<section class="block"><h2>To-do lists</h2><nav class="tiles" aria-label="To-do lists">'+GROUPS.map(tileHtml).join("")+'</nav></section>'
+   +'<section class="block"><h2>More</h2><nav class="tiles small" aria-label="More pages">'
+   +'<a class="tile" id="t-search" href="#search">'+icon({icon:"search"})+'<span class="tn">Search all items</span></a>'
+   +'<a class="tile" id="t-said" href="#said">'+icon({icon:"notes"})+'<span class="tn">What was said: the full notes</span></a>'
+   +'<a class="tile" id="t-timeline" href="#timeline">'+icon({icon:"line"})+'<span class="tn">The long run, to summer 2028</span></a></nav></section>'
+   +'<section class="block"><h2>Who was at the meeting</h2><p class="lede">'+ATTENDED.map(esc).join(", ")+'.</p></section>';
   return h;
 }
-function noteHtml(){
-  if(!loaded) return '<p class="notice" role="status">'+esc(loadNote)+'</p>';
-  if(!writable()) return '<p class="notice" role="status">'+esc(window.CURLEW_RO_NOTE||"Read-only: you can see what is ticked and decided, but not change it. Ask Christa Schneider for contributor access to this page.")+'</p>';
-  return "";
+function searchHtml(){
+  var h=backHtml()+'<section class="block"><h1>Search all items</h1><div><label class="mono" for="q">Type a word; all to-do lists are searched</label><input type="text" id="q" placeholder="e.g. football" autocomplete="off" value="'+esc(q)+'"></div>'+nameHtml()+noteHtml()+'</section>';
+  if(!q) return h;
+  var hit=search(q), by={}; hit.forEach(function(x){(by[x.g]=by[x.g]||[]).push(x);});
+  h+='<p class="mono" role="status">'+hit.length+' items match "'+esc(q)+'"</p>';
+  GROUPS.forEach(function(g){ if(by[g.key]) h+='<section class="block"><h2><a href="#g-'+g.key+'">'+esc(g.name)+'</a></h2>'+listHtml(by[g.key])+'</section>'; });
+  if(!hit.length) h+='<p class="lede">No item matches. Try a shorter word.</p>';
+  return h;
 }
 function timelineHtml(){
   var now=new Date(), m=(now.getFullYear()-2026)*12+(now.getMonth()-11)+(now.getDate()-1)/31;
   var pc=function(x){return (x/20*100).toFixed(2)+"%";};
-  var h='<div class="tl"><div class="tlr" style="border-top:0;min-height:0"><div></div><div><div class="yrs"><span style="left:0">\u201926</span><span style="left:'+pc(1)+'">2027</span><span style="left:'+pc(13)+'">2028</span></div><div class="axis">'+MONTHS.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div></div></div>';
+  var h=backHtml()+'<section class="block"><h1>The long run, December 2026 to July 2028</h1><div class="tl"><div class="tlr" style="border-top:0;min-height:0"><div></div><div><div class="yrs"><span style="left:0">’26</span><span style="left:'+pc(1)+'">2027</span><span style="left:'+pc(13)+'">2028</span></div><div class="axis">'+MONTHS.map(function(x){return "<span>"+x+"</span>";}).join("")+'</div></div></div>';
   TL.forEach(function(r){
     h+='<div class="tlr"><div class="l">'+esc(r.l)+'<small>'+esc(r.n)+'</small></div><div class="trk">';
     if(m>=0&&m<=20) h+='<span class="now" style="left:'+pc(m)+'"></span>';
@@ -955,92 +950,73 @@ function timelineHtml(){
     else h+='<span class="gn" style="left:4px">'+esc(r.n)+'</span>';
     h+='</div></div>';
   });
-  return h+'</div><p class="mono">Grey bars: periods · black diamonds: milestones · red: the 30 November deadline'+(m<0?' · today is before the start of this chart':' · black line: today')+'</p>';
+  return h+'</div><p class="mono">Grey bars: periods · diamonds: milestones · red: the 30 November deadline'+(m<0?' · today is before the start of this chart':' · dark line: today')+'</p></section>';
 }
 function saidHtml(){
-  var h='<section class="block"><h2>Names and initials</h2><table class="key">'+PEOPLE.map(function(p){return "<tr><td><b>"+esc(p[0])+"</b></td><td>"+esc(p[1])+"</td><td>"+esc(p[2])+"</td></tr>";}).join("")+'</table><p class="mono">Also mentioned: Gary Thoms, Devyani Sharma, Yves Scherrer, Simon Roper</p></section>';
-  SAID.forEach(function(n){
-    h+='<section class="block said"><h2>'+esc(n.name)+'</h2><p class="mono">'+esc(n.when)+'</p><div class="cols">';
-    var blocks=n.blocks.slice(), g=n.plan&&BYG[n.plan];
-    if(g){ if(n.plan!=="all") blocks.unshift({h:"Context",items:[g.meta]}); g.sections.forEach(function(s){blocks.push({h:s.h,items:s.items.map(function(it){return typeof it==="string"?it.slice(2):it.t;})});}); }
-    blocks.forEach(function(b){h+='<div>'+(b.h?'<h3>'+esc(b.h)+'</h3>':'')+'<ul>'+b.items.map(function(i){return "<li>"+fmt(i)+"</li>";}).join("")+'</ul></div>';});
-    h+='</div></section>';
+  var h=backHtml()+'<section class="block"><h1>What was said</h1><p class="lede">The complete record of the meeting notes of 5 and 6 November 2026, sorted by topic. Open one topic at a time.</p></section>';
+  var secs=[{name:"Names and initials", people:1}].concat(SAID);
+  secs.forEach(function(n,i){
+    var on=openSaid===i;
+    h+='<section class="acc'+(on?' on':'')+'"><h2><button type="button" class="acch" id="said-'+i+'" data-said="'+i+'" aria-expanded="'+on+'"><span>'+esc(n.name)+'</span><span class="mono" aria-hidden="true">'+(on?'−':'+')+'</span></button></h2>';
+    if(on){
+      if(n.people){ h+='<table class="key">'+PEOPLE.map(function(p){return "<tr><td><b>"+esc(p[0])+"</b></td><td>"+esc(p[1])+"</td><td>"+esc(p[2])+"</td></tr>";}).join("")+'</table><p class="mono">Also mentioned: Gary Thoms, Devyani Sharma, Yves Scherrer, Simon Roper</p>'; }
+      else {
+        h+='<div class="said"><p class="mono">'+esc(n.when)+'</p><div class="cols">';
+        var blocks=n.blocks.slice(), g=n.plan&&BYG[n.plan];
+        if(g){ if(n.plan!=="all") blocks.unshift({h:"Context",items:[g.meta]}); g.sections.forEach(function(s){blocks.push({h:s.h,items:s.items.map(function(it){return typeof it==="string"?it.slice(2):it.t;})});}); }
+        blocks.forEach(function(b){h+='<div>'+(b.h?'<h3>'+esc(b.h)+'</h3>':'')+'<ul>'+b.items.map(function(x){return "<li>"+fmt(x)+"</li>";}).join("")+'</ul></div>';});
+        h+='</div></div>';
+      }
+    }
+    h+='</section>';
   });
   return h;
 }
 
-/* ---------- shell ---------- */
-function view(){var h=(location.hash||"").replace("#","");return h==="said"?"said":"do";}
-function shell(){
-  $("app").innerHTML='<header id="head"></header>'
-   +'<nav class="tabs" aria-label="Views"><a class="btn" id="tab-do" href="#do">What to do</a><a class="btn" id="tab-said" href="#said">What was said</a></nav>'
-   +'<main id="v-do" style="display:flex;flex-direction:column;gap:28px">'
-   +'<div class="top2"><section class="block"><p class="mono">Hard deadline for all variables · Monday, 30 November 2026, 23:59 Bern time</p><div class="count" id="count" role="timer"></div></section><section class="block"><p class="mono">Completion, items due by the end of November</p><div id="overall" style="display:flex;flex-direction:column;gap:8px"></div></section></div>'
-   +'<section class="block"><h2>Next three weeks</h2><div class="meet" id="meet"></div><div id="strip" style="display:flex;flex-direction:column;gap:8px"></div></section>'
-   +'<section class="block"><h2>Pick your group</h2><p class="lede">Each button opens that group’s list. Your choice is remembered on this device, and every list has its own link to send round.</p><nav class="picker" id="picker" aria-label="Groups"></nav></section>'
-   +'<section class="block"><h2>Progress by group</h2><p class="lede">Tasks done and decisions decided, sorted by due date. Notes are not counted; Localities is not tracked here.</p><div id="progress"></div></section>'
-   +'<section class="block"><h2>Lists</h2><div style="max-width:420px"><label class="mono" for="myname">Your name (shown next to your changes; remembered on this device)</label><input type="text" id="myname" maxlength="60" autocomplete="name" placeholder="First name and surname"></div><div class="tools"><div><label class="mono" for="q">Search all items in all groups</label><input type="search" id="q" placeholder="e.g. football" autocomplete="off"></div>'
-   +'<label class="switch" for="openonly"><input type="checkbox" id="openonly" role="switch"'+(ui.openOnly?' checked':'')+'><span class="mono">Show open items only</span></label></div><div id="note"></div></section>'
-   +'<div id="cards" style="display:flex;flex-direction:column;gap:28px"></div>'
-   +'<section class="block"><h2>Change log</h2><p class="lede">Who changed what and when, newest first. Entries are kept even when a tick is undone or a decision is reopened.</p><div id="log"></div></section>'
-   +'<section class="block"><h2>The long run, December 2026 to July 2028</h2><div id="timeline"></div></section>'
-   +'</main><main id="v-said" class="hidden" style="display:flex;flex-direction:column;gap:28px"><p class="lede">The complete record of the meeting notes of 5 and 6 November, sorted by topic. What has to be done is under "What to do".</p><div id="said" style="display:flex;flex-direction:column;gap:28px"></div></main>'
-   +'<footer class="mono"><span>CURLEW</span><span>Source: team notes, York, 5 and 6 November 2026 · Questions: Christa Schneider</span></footer>';
-  $("timeline").innerHTML=timelineHtml();
-  $("said").innerHTML=saidHtml();
-}
-function keepFocus(fn){
-  var a=document.activeElement, id=a&&a.id, pos=(a&&a.tagName==="INPUT"&&a.type==="text")?a.selectionStart:null;
-  fn();
-  if(editing){var inp=$("ans-"+editing); if(inp){inp.value=draft;}}
-  if(id){var el=$(id); if(el&&el!==document.activeElement){try{el.focus({preventScroll:true}); if(pos!=null) el.setSelectionRange(pos,pos);}catch(e){}}}
-  names();
-}
-function renderDyn(){
-  keepFocus(function(){
-    var v=view();
-    $("v-do").classList.toggle("hidden",v!=="do"); $("v-said").classList.toggle("hidden",v!=="said");
-    $("tab-do").classList.toggle("on",v==="do"); $("tab-said").classList.toggle("on",v==="said");
-    $("head").innerHTML=headHtml(); $("meet").innerHTML=meetHtml(); $("strip").innerHTML=stripHtml();
-    $("overall").innerHTML=overallHtml(); $("picker").innerHTML=pickerHtml(); $("progress").innerHTML=progressHtml(); $("note").innerHTML=noteHtml(); $("cards").innerHTML=cardsHtml(); $("log").innerHTML=logHtml();
-  });
-}
+/* ---------- render ---------- */
+function view(){ var h=(location.hash||"").replace("#",""); if(h.indexOf("g-")===0&&BYG[h.slice(2)]) return {t:"g",key:h.slice(2)}; if(h==="said"||h==="timeline"||h==="search") return {t:h}; return {t:"home"}; }
 function names(){
   if(!user||!user.profiles) return;
   var els=document.querySelectorAll("[data-uid]"), ids=[]; els.forEach(function(e){var i=e.getAttribute("data-uid"); if(i&&ids.indexOf(i)<0) ids.push(i);});
   if(!ids.length) return;
   user.profiles(ids).then(function(ps){els.forEach(function(e){var p=ps[e.getAttribute("data-uid")]; e.textContent=(p&&p.name)||"someone";});});
 }
+function render(){
+  var a=document.activeElement, id=a&&a.id, pos=(a&&a.tagName==="INPUT"&&a.type==="text")?a.selectionStart:null;
+  var v=view(), h=v.t==="g"?bucketHtml(BYG[v.key]):v.t==="said"?saidHtml():v.t==="timeline"?timelineHtml():v.t==="search"?searchHtml():homeHtml();
+  $("app").innerHTML=h+'<footer class="mono"><span>CURLEW</span><span>Compiled by Christa Schneider from the notes of 5 and 6 November 2026</span></footer>';
+  if(id){var el=$(id); if(el&&el!==document.activeElement){try{el.focus({preventScroll:true}); if(pos!=null) el.setSelectionRange(pos,pos);}catch(e){}}}
+  names();
+}
 function fail(err,id){
   var code=err&&err.code;
   if(code==="invalid_argument"||code==="not_granted"||code==="revoked"){canWrite=false; flash="";}
   else flash="That could not be saved. Please try again in a moment.";
-  if(id) delete busy[id]; renderDyn();
-}
-function write(id,body){
-  if(!writable()||busy[id]) return; busy[id]=1; flash="";
-  var ref=db.doc("marks/"+id), p=body?ref.set(body):ref["delete"](), old=marks[id], x=BYID[id];
-  if(body) marks[id]=body; else delete marks[id];
-  renderDyn();
-  p.then(function(){delete busy[id];
-    var e={id:id, act: body?body.s:((x&&x.k==="D")?"reopened":"undone")}; if(body&&body.answer) e.answer=body.answer; if(!body&&old&&old.answer) e.prev=old.answer; logAdd(e);
-  },function(e){fail(e,id);});
+  if(id) delete busy[id]; render();
 }
 function stamp(o){o.by=uid||""; o.name=(ui.name||"").trim().slice(0,60); o.at=new Date().toISOString(); return o;}
-function needName(){ if((ui.name||"").trim()) return false; flash="Please enter your name first, in the field \"Your name\" above the lists. It is shown next to your changes."; renderDyn(); var n=$("myname"); if(n){ n.focus(); if(n.scrollIntoView) n.scrollIntoView({block:"center"}); } return true; }
-
+function needName(){ if((ui.name||"").trim()) return false;
+  var n=$("myname");
+  if(n){ flash="Please enter your name first, in the field \"Your name\". It is shown next to what you tick."; render(); n=$("myname"); if(n){ n.focus(); if(n.scrollIntoView) n.scrollIntoView({block:"center"}); } }
+  else { flash="Please open your to-do list and enter your name there first; then you can set the date."; render(); }
+  return true; }
+function write(id,body){
+  if(!writable()||busy[id]) return; busy[id]=1; flash="";
+  var ref=db.doc("marks/"+id), p=body?ref.set(body):ref["delete"]();
+  if(body) marks[id]=body; else delete marks[id];
+  render();
+  p.then(function(){delete busy[id];},function(e){fail(e,id);});
+}
 document.addEventListener("change",function(e){
-  var t=e.target;
-  if(t.id==="openonly"){ui.openOnly=t.checked; reveal={}; saveUi(); renderDyn(); return;}
-  var id=t.getAttribute&&t.getAttribute("data-tick"); if(!id) return;
+  var t=e.target, id=t.getAttribute&&t.getAttribute("data-tick"); if(!id) return;
   if(needName()) return;
   write(id, t.checked?stamp({s:"done"}):null);
 });
 document.addEventListener("input",function(e){
   var t=e.target;
-  if(t.id==="q"){q=t.value.trim(); renderDyn(); return;}
+  if(t.id==="q"){q=t.value.trim(); render(); return;}
   if(t.id==="mt-date"){meetDraft=t.value; return;}
-  if(t.id==="myname"){ui.name=t.value.slice(0,60); saveUi(); if(flash&&ui.name.trim()){flash=""; renderDyn();} return;}
+  if(t.id==="myname"){ui.name=t.value.slice(0,60); saveUi(); if(flash&&ui.name.trim()){flash=""; render();} return;}
   if(t.id&&t.id.indexOf("ans-")===0) draft=t.value;
 });
 document.addEventListener("submit",function(e){
@@ -1053,49 +1029,38 @@ document.addEventListener("click",function(e){
   var t=e.target.closest&&e.target.closest("button"); if(!t) return;
   var a;
   if((a=t.getAttribute("data-undo"))){ if(needName()) return; write(a,null); }
-  else if((a=t.getAttribute("data-decide"))){ editing=a; draft=""; renderDyn(); var i=$("ans-"+a); if(i) i.focus(); }
-  else if(t.hasAttribute("data-cancel")){ var was=editing; editing=null; draft=""; renderDyn(); var b=$("md-"+was); if(b) b.focus(); }
-  else if((a=t.getAttribute("data-reveal"))){ reveal[a]=!reveal[a]; renderDyn(); }
-  else if(t.hasAttribute("data-logall")){ logAll=!logAll; renderDyn(); }
-  else if(t.hasAttribute("data-logstart")||t.hasAttribute("data-logstop")){ if(!db||!isOwner) return; var on=t.hasAttribute("data-logstart"); logStart=on?new Date().toISOString():""; renderDyn();
-    var lr=db.doc("settings/log"); (on?lr.set({start:logStart}):lr["delete"]()).then(null,function(er){fail(er);}); }
-  else if(t.hasAttribute("data-meet")||t.hasAttribute("data-meetset")){ if(!writable()||needName()) return; var mi=$("mt-date"); var dte=t.hasAttribute("data-meetset")?((mi&&mi.value)||meetDraft):t.getAttribute("data-meet"); if(t.hasAttribute("data-meetset")&&!/^\d{4}-\d{2}-\d{2}$/.test(dte)){ if(mi) mi.focus(); return; } meetDraft=""; meeting=dte?stamp({date:dte}):null; renderDyn();
-    var ref=db.doc("settings/meeting"); (dte?ref.set(meeting):ref["delete"]()).then(function(){ var e={id:"meeting", act:dte?"meeting-set":"meeting-cleared"}; if(dte) e.date=dte; logAdd(e); },function(er){fail(er);}); }
+  else if((a=t.getAttribute("data-decide"))){ editing=a; draft=""; render(); var i=$("ans-"+a); if(i) i.focus(); }
+  else if(t.hasAttribute("data-cancel")){ var was=editing; editing=null; draft=""; render(); var b=$("md-"+was); if(b) b.focus(); }
+  else if((a=t.getAttribute("data-sec"))){ var p=a.split(":"), g=BYG[p[0]], c=counts(g), cur=openSec[p[0]]; if(cur===undefined) cur=c.T?"T":(c.D?"D":"N"); openSec[p[0]]=(cur===p[1])?null:p[1]; render(); }
+  else if((a=t.getAttribute("data-said"))){ openSaid=(openSaid===+a)?-1:+a; render(); }
+  else if(t.hasAttribute("data-meet")||t.hasAttribute("data-meetset")){ if(!writable()||needName()) return; var mi=$("mt-date"); var dte=t.hasAttribute("data-meetset")?((mi&&mi.value)||meetDraft):t.getAttribute("data-meet"); if(t.hasAttribute("data-meetset")&&!/^\d{4}-\d{2}-\d{2}$/.test(dte)){ if(mi) mi.focus(); return; } meetDraft="";
+    meeting=dte?stamp({date:dte}):null; render();
+    var ref=db.doc("settings/meeting"); (dte?ref.set(meeting):ref["delete"]()).then(null,function(er){fail(er);}); }
   else if((a=t.getAttribute("data-copy"))){ var url=ART_URL+"#g-"+a;
-    var ok=function(){flash="Link copied: "+url; renderDyn();}, no=function(){flash="Copy this link: "+url; renderDyn();};
+    var ok=function(){flash="Link copied: "+url; render();}, no=function(){flash="Copy this link: "+url; render();};
     try{ navigator.clipboard.writeText(url).then(ok,no); }catch(er){ no(); } }
 });
-function route(){
-  var h=(location.hash||"").replace("#","");
-  if(h.indexOf("g-")===0&&BYG[h.slice(2)]){ ui.group=h.slice(2); saveUi(); if(q){ q=""; $("q").value=""; } }
-  renderDyn();
-}
-window.addEventListener("hashchange",function(){ var h=(location.hash||"").replace("#",""); route(); if(h.indexOf("g-")===0){var c=$("g-"+ui.group); if(c&&c.scrollIntoView) c.scrollIntoView({block:"start"});} else window.scrollTo(0,0); });
-setInterval(function(){ $("head").innerHTML=headHtml(); },60000);
+window.addEventListener("hashchange",function(){ flash=""; editing=null; draft=""; render(); window.scrollTo(0,0); });
 setInterval(function(){ var c=$("count"); if(c) c.innerHTML=countHtml(); },1000);
-
-shell(); $("myname").value=ui.name; $("count").innerHTML=countHtml(); route();
+render();
 
 /* ---------- shared data ---------- */
 var use=(window.claude&&window.claude.use)?function(n){return window.claude.use(n);}:function(){return Promise.resolve(null);};
-var slow=setTimeout(function(){ if(!loaded){ loadNote="The shared ticks can’t be reached yet. The lists below show everything as open."; renderDyn(); } },10000);
+var slow=setTimeout(function(){ if(!loaded){ loadNote="The shared ticks can’t be reached yet. Everything is shown as open for now."; render(); } },10000);
 use("user").then(function(u){
   user=u||null; if(!user) return null;
-  return Promise.all([user.id(), user.can("data.write"), user.isOwner(), user.me()]).then(function(r){ uid=r[0]; isOwner=!!r[2];
-    if(!ui.name&&r[3]&&r[3].name){ ui.name=String(r[3].name).slice(0,60); var nf=$("myname"); if(nf&&!nf.value) nf.value=ui.name; } if(r[1]===false) canWrite=false; else if(r[1]===true) canWrite=true; });
+  return Promise.all([user.id(), user.can("data.write"), user.me()]).then(function(r){ uid=r[0]; if(r[1]===false) canWrite=false; else if(r[1]===true) canWrite=true;
+    if(!ui.name&&r[2]&&r[2].name){ ui.name=String(r[2].name).slice(0,60); } });
 }).then(function(){ return use("db"); }).then(function(d){
   db=d||null;
-  if(!db){ clearTimeout(slow); loaded=true; renderDyn(); return; }
+  if(!db){ clearTimeout(slow); loaded=true; render(); return; }
   db.collection("marks").onSnapshot(function(snap){
     var m={}; snap.docs.forEach(function(doc){ var b=doc.data(); if(b&&b.s) m[doc.id]=b; });
     Object.keys(busy).forEach(function(id){ if(marks[id]) m[id]=marks[id]; else delete m[id]; });
-    marks=m; if(!snap.metadata||!snap.metadata.fromCache||!loaded){ clearTimeout(slow); loaded=true; }
-    renderDyn();
-  },function(){ clearTimeout(slow); loaded=true; db=null; renderDyn(); });
-  db.collection("log").orderBy("at","desc").limit(300).onSnapshot(function(snap){ logs=snap.docs.map(function(d){return d.data();}).filter(function(b){return b&&b.act&&b.at;}); renderDyn(); },function(){});
-  db.doc("settings/log").onSnapshot(function(sn){ var b=sn.exists?sn.data():null; logStart=(b&&typeof b.start==="string")?b.start:""; renderDyn(); },function(){});
-  db.doc("settings/meeting").onSnapshot(function(s){ var b=s.exists?s.data():null; meeting=(b&&b.date)?b:null; renderDyn(); },function(){});
-},function(){ clearTimeout(slow); loaded=true; renderDyn(); });
+    marks=m; clearTimeout(slow); loaded=true; render();
+  },function(){ clearTimeout(slow); loaded=true; db=null; render(); });
+  db.doc("settings/meeting").onSnapshot(function(s){ var b=s.exists?s.data():null; meeting=(b&&b.date)?b:null; render(); },function(){});
+},function(){ clearTimeout(slow); loaded=true; render(); });
 })();
 </script>
 </body>
